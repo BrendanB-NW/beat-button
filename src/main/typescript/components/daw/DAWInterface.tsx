@@ -59,7 +59,7 @@ export function DAWInterface() {
       {!currentProject ? (
         <div className="flex-1 flex items-center justify-center bg-earth-bg-900">
           <div className="text-center">
-            <h2 className="text-xl font-semibold text-earth-bg-200 mb-4">Welcome to B. Boyd's Bangin' Beat Button</h2>
+            <h2 className="text-xl font-semibold text-earth-bg-200 mb-4">Welcome to SoundSage</h2>
             <p className="text-earth-bg-300 mb-6">Create a new project or load an existing one to start making music</p>
             <div className="text-sm text-earth-bg-400">
               Use the <span className="font-mono bg-earth-bg-800 px-2 py-1 rounded text-earth-ochre-300">+</span> button above to create a new project

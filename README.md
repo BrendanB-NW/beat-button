@@ -1,4 +1,4 @@
-# B. Boyd's Bangin' Beat Button
+# SoundSage
 
 A modern, web-based Digital Audio Workstation (DAW) focused on educational melody creation with integrated music theory guidance. Built with React, TypeScript, and Web Audio API.
 
@@ -152,7 +152,7 @@ npm run test:coverage       # With coverage report
 
 ## 📚 Educational Philosophy
 
-B. Boyd's Bangin' Beat Button is designed with music education in mind:
+SoundSage is designed with music education in mind:
 
 - **Progressive Learning**: Start simple, add complexity gradually
 - **Theory Integration**: Learn theory through practical application

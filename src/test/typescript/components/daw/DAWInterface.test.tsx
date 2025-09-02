@@ -85,7 +85,7 @@ describe('DAWInterface', () => {
 
     render(<DAWInterface />);
 
-    expect(screen.getByText('Welcome to B. Boyd\'s Bangin\' Beat Button')).toBeInTheDocument();
+    expect(screen.getByText('Welcome to SoundSage')).toBeInTheDocument();
     expect(screen.getByText('Create a new project or load an existing one to start making music')).toBeInTheDocument();
     expect(screen.getByTestId('project-manager')).toBeInTheDocument();
     
@@ -116,7 +116,7 @@ describe('DAWInterface', () => {
     expect(screen.getByTestId('piano-roll')).toBeInTheDocument();
     
     // Should not show welcome screen
-    expect(screen.queryByText('Welcome to B. Boyd\'s Bangin\' Beat Button')).not.toBeInTheDocument();
+    expect(screen.queryByText('Welcome to SoundSage')).not.toBeInTheDocument();
   });
 
   it('shows timeline only when project is loaded (not on welcome screen)', () => {

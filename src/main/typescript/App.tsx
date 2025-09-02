@@ -13,7 +13,7 @@ function App() {
       <div className="h-screen bg-earth-bg-900 text-earth-bg-50 flex flex-col overflow-hidden">
         <header className="bg-earth-bg-800 border-b border-earth-bg-700 p-4">
           <h1 className="text-2xl font-bold text-earth-ochre-300">
-            B. Boyd's Bangin' Beat Button
+            SoundSage
           </h1>
         </header>
         

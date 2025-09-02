@@ -1,7 +1,7 @@
 {
-  "name": "beat-button",
+  "name": "soundsage",
   "version": "1.0.0",
-  "description": "B. Boyd's Bangin' Beat Button - Educational melody creation tool",
+  "description": "SoundSage - Educational melody creation tool with integrated music theory guidance",
   "type": "module",
   "scripts": {
     "dev": "vite",

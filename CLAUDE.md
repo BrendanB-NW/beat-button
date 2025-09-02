@@ -1,8 +1,8 @@
-# CLAUDE.md - B. Boyd's Bangin' Beat Button Specification
+# CLAUDE.md - SoundSage Specification
 
 ## Project Overview
 
-**Project Name**: B. Boyd's Bangin' Beat Button  
+**Project Name**: SoundSage  
 **Type**: Web-based Digital Audio Workstation (DAW)  
 **Purpose**: Educational melody creation tool with integrated music theory guidance  
 **Target Users**: Musically interested individuals who are novices with music theory  
@@ -220,7 +220,7 @@ To regenerate this project:
 9. **Performance Optimize**: Meet latency and responsiveness requirements
 10. **Document Completely**: Ensure all APIs have JSDoc documentation
 
-This specification provides everything needed to recreate "B. Boyd's Bangin' Beat Button" from scratch while maintaining architectural consistency and quality standards.
+This specification provides everything needed to recreate "SoundSage" from scratch while maintaining architectural consistency and quality standards.
 
 ## Current Implementation Status
 
@@ -371,11 +371,11 @@ Last Updated: January 2025
 
 ---
 
-# AI Integration Specification - Enhanced B. Boyd's Bangin' Beat Button
+# AI Integration Specification - Enhanced SoundSage
 
 ## AI Enhancement Overview
 
-**Enhancement Goal**: Transform B. Boyd's Bangin' Beat Button into an AI-powered music creation assistant that can generate melodies, explain music theory, and create dynamic instruments based on natural language prompts.
+**Enhancement Goal**: Transform SoundSage into an AI-powered music creation assistant that can generate melodies, explain music theory, and create dynamic instruments based on natural language prompts.
 
 **Core AI Capabilities**:
 1. **AI Melody Generation**: Generate melodies that match user-specified tones and moods
@@ -761,4 +761,4 @@ interface AIInstrumentDesignerProps {
 - **Skill Development**: Progressive complexity in user compositions over time
 - **Knowledge Retention**: Users retain and apply learned concepts in future projects
 
-This AI integration will transform B. Boyd's Bangin' Beat Button from a traditional DAW into an intelligent music creation partner that teaches, assists, and inspires users throughout their musical journey.
+This AI integration will transform SoundSage from a traditional DAW into an intelligent music creation partner that teaches, assists, and inspires users throughout their musical journey.
