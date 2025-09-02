@@ -4,10 +4,13 @@ import { ProjectManager } from './ProjectManager';
 import { TrackList } from './TrackList';
 import { PianoRoll } from './PianoRoll';
 import { Timeline } from './Timeline';
+import { AIAssistantPanel } from '../ai/AIAssistantPanel';
 import { useDAWStore } from '../../stores/dawStore';
 
 export function DAWInterface() {
   const currentProject = useDAWStore((state) => state.currentProject);
+  const aiAssistantVisible = useDAWStore((state) => state.aiAssistantVisible);
+  const toggleAIAssistant = useDAWStore((state) => state.toggleAIAssistant);
 
   return (
     <div className="flex-1 flex flex-col min-h-0">
@@ -22,7 +25,20 @@ export function DAWInterface() {
           )}
         </div>
         
-        <TransportControls />
+        <div className="flex items-center space-x-2">
+          <TransportControls />
+          <button
+            onClick={toggleAIAssistant}
+            className={`p-2 rounded transition-colors ${
+              aiAssistantVisible 
+                ? 'bg-blue-600 text-white' 
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            }`}
+            title="AI Assistant"
+          >
+            🤖
+          </button>
+        </div>
       </div>
 
       {!currentProject ? (
@@ -32,6 +48,14 @@ export function DAWInterface() {
             <p className="text-gray-400 mb-6">Create a new project or load an existing one to start making music</p>
             <div className="text-sm text-gray-500">
               Use the <span className="font-mono bg-gray-800 px-2 py-1 rounded">+</span> button above to create a new project
+            </div>
+            <div className="mt-6">
+              <button
+                onClick={toggleAIAssistant}
+                className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded transition-colors flex items-center gap-2"
+              >
+                🤖 Try AI Assistant
+              </button>
             </div>
           </div>
         </div>
@@ -59,6 +83,12 @@ export function DAWInterface() {
           </div>
         </div>
       )}
+
+      {/* AI Assistant Panel */}
+      <AIAssistantPanel 
+        visible={aiAssistantVisible} 
+        onClose={toggleAIAssistant} 
+      />
     </div>
   );
 }

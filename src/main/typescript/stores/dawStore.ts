@@ -1,9 +1,11 @@
 import { create } from 'zustand';
 import { devtools, subscribeWithSelector } from 'zustand/middleware';
-import { Project, Note, Track, Key, TimeSignature, SynthType } from '../types/music';
+import { Project, Note, Track, Key, TimeSignature, SynthType, InstrumentConfig } from '../types/music';
 import { DAWState, PianoRollState, TimelineState, TheoryTooltip } from '../types/ui';
+import { AIInteraction, AIPreferences, AITheoryResponse } from '../types/ai';
 import { projectManager } from '../services/projectManager';
 import { audioEngine } from '../services/audioEngine';
+import { aiService } from '../services/aiService';
 
 interface DAWStore {
   // Project state
@@ -67,6 +69,24 @@ interface DAWStore {
   redo: () => void;
   canUndo: () => boolean;
   canRedo: () => boolean;
+
+  // AI State
+  aiAssistantVisible: boolean;
+  aiGenerating: boolean;
+  lastAIRequest: string;
+  aiHistory: AIInteraction[];
+  aiPreferences: AIPreferences;
+  lastTheoryResponse: AITheoryResponse | null;
+  
+  // AI Actions
+  toggleAIAssistant: () => void;
+  generateAIMelody: (prompt: string, trackId: string, constraints?: any) => Promise<void>;
+  askAIQuestion: (question: string) => Promise<AITheoryResponse>;
+  createAIInstrument: (prompt: string, characteristics?: any) => Promise<InstrumentConfig>;
+  refineAIMelody: (notes: Note[], refinementPrompt: string) => Promise<void>;
+  setAIPreferences: (preferences: Partial<AIPreferences>) => void;
+  clearAIHistory: () => void;
+  setAIApiKey: (apiKey: string) => void;
 }
 
 const createDefaultProject = (name: string, key: Key, tempo: number): Project => ({
@@ -128,6 +148,19 @@ export const useDAWStore = create<DAWStore>()(
       
       theoryHelperVisible: false,
       activeTooltip: null,
+
+      // AI State
+      aiAssistantVisible: false,
+      aiGenerating: false,
+      lastAIRequest: '',
+      aiHistory: [],
+      aiPreferences: {
+        theoryLevel: 'beginner',
+        preferredGenres: ['pop', 'rock'],
+        explanationStyle: 'conversational',
+        creativityLevel: 0.7
+      },
+      lastTheoryResponse: null,
 
       // Project Management Actions
       createNewProject: async (name: string, key: Key, tempo: number) => {
@@ -454,7 +487,253 @@ export const useDAWStore = create<DAWStore>()(
       },
 
       canUndo: () => projectManager.canUndo(),
-      canRedo: () => projectManager.canRedo()
+      canRedo: () => projectManager.canRedo(),
+
+      // AI Actions
+      toggleAIAssistant: () => {
+        set((state) => ({ aiAssistantVisible: !state.aiAssistantVisible }));
+      },
+
+      generateAIMelody: async (prompt: string, trackId: string, constraints?: any) => {
+        const { currentProject } = get();
+        if (!currentProject) return;
+
+        set({ aiGenerating: true, lastAIRequest: prompt });
+
+        try {
+          const request = {
+            prompt,
+            projectContext: {
+              key: currentProject.key,
+              tempo: currentProject.tempo,
+              timeSignature: currentProject.timeSignature,
+              existingTracks: currentProject.tracks
+            },
+            constraints: {
+              length: 8,
+              targetTrack: trackId,
+              noteRange: { min: 36, max: 84 },
+              rhythmicDensity: 'moderate',
+              ...constraints
+            }
+          };
+
+          const response = await aiService.generateMelody(request);
+          
+          // Add generated notes to the track
+          const updatedProject = {
+            ...currentProject,
+            tracks: currentProject.tracks.map(track =>
+              track.id === trackId
+                ? { ...track, notes: [...track.notes, ...response.notes] }
+                : track
+            ),
+            modifiedAt: new Date()
+          };
+
+          // Record AI interaction
+          const interaction: AIInteraction = {
+            id: `ai_${Date.now()}`,
+            timestamp: new Date(),
+            type: 'melody',
+            prompt,
+            response,
+            applied: true
+          };
+
+          set((state) => ({
+            currentProject: updatedProject,
+            aiHistory: [...state.aiHistory, interaction],
+            aiGenerating: false
+          }));
+
+          // Save the project
+          await projectManager.saveProject(updatedProject);
+
+        } catch (error) {
+          console.error('AI melody generation failed:', error);
+          set({ aiGenerating: false });
+        }
+      },
+
+      askAIQuestion: async (question: string) => {
+        const { currentProject, pianoRoll, aiPreferences } = get();
+        if (!currentProject) {
+          const fallbackResponse: AITheoryResponse = {
+            explanation: 'Please load or create a project first to get contextual theory explanations.',
+            concepts: [],
+            examples: {},
+            relatedQuestions: []
+          };
+          set({ lastTheoryResponse: fallbackResponse });
+          return fallbackResponse;
+        }
+
+        set({ aiGenerating: true, lastAIRequest: question });
+
+        try {
+          const query = {
+            question,
+            context: {
+              project: currentProject,
+              selectedNotes: pianoRoll.selectedNotes,
+              userKnowledgeLevel: aiPreferences.theoryLevel
+            }
+          };
+
+          const response = await aiService.explainTheory(query);
+
+          // Record AI interaction
+          const interaction: AIInteraction = {
+            id: `ai_${Date.now()}`,
+            timestamp: new Date(),
+            type: 'theory',
+            prompt: question,
+            response,
+            applied: false
+          };
+
+          set((state) => ({
+            lastTheoryResponse: response,
+            aiHistory: [...state.aiHistory, interaction],
+            aiGenerating: false
+          }));
+
+          return response;
+
+        } catch (error) {
+          console.error('AI theory question failed:', error);
+          const errorResponse: AITheoryResponse = {
+            explanation: 'Sorry, I encountered an error processing your question. Please check your AI configuration and try again.',
+            concepts: [],
+            examples: {},
+            relatedQuestions: []
+          };
+          set({ lastTheoryResponse: errorResponse, aiGenerating: false });
+          return errorResponse;
+        }
+      },
+
+      createAIInstrument: async (prompt: string, characteristics?: any) => {
+        set({ aiGenerating: true, lastAIRequest: prompt });
+
+        try {
+          const request = {
+            prompt,
+            targetCharacteristics: {
+              brightness: 0.5,
+              warmth: 0.5,
+              attack: 0.5,
+              sustain: 0.5,
+              complexity: 0.5,
+              ...characteristics
+            }
+          };
+
+          const response = await aiService.createInstrument(request);
+
+          // Record AI interaction
+          const interaction: AIInteraction = {
+            id: `ai_${Date.now()}`,
+            timestamp: new Date(),
+            type: 'instrument',
+            prompt,
+            response,
+            applied: false
+          };
+
+          set((state) => ({
+            aiHistory: [...state.aiHistory, interaction],
+            aiGenerating: false
+          }));
+
+          return response.instrumentConfig;
+
+        } catch (error) {
+          console.error('AI instrument creation failed:', error);
+          set({ aiGenerating: false });
+          return {
+            type: 'sine' as const,
+            params: {}
+          };
+        }
+      },
+
+      refineAIMelody: async (notes: Note[], refinementPrompt: string) => {
+        const { currentProject } = get();
+        if (!currentProject || notes.length === 0) return;
+
+        set({ aiGenerating: true, lastAIRequest: refinementPrompt });
+
+        try {
+          const context = {
+            key: currentProject.key,
+            tempo: currentProject.tempo,
+            timeSignature: currentProject.timeSignature,
+            existingTracks: currentProject.tracks
+          };
+
+          const response = await aiService.refineMelody(notes, refinementPrompt, context);
+          
+          // Replace the refined notes in the track
+          const trackId = notes[0].trackId;
+          const noteIds = new Set(notes.map(n => n.id));
+          
+          const updatedProject = {
+            ...currentProject,
+            tracks: currentProject.tracks.map(track =>
+              track.id === trackId
+                ? {
+                    ...track,
+                    notes: [
+                      ...track.notes.filter(n => !noteIds.has(n.id)),
+                      ...response.notes
+                    ]
+                  }
+                : track
+            ),
+            modifiedAt: new Date()
+          };
+
+          // Record AI interaction
+          const interaction: AIInteraction = {
+            id: `ai_${Date.now()}`,
+            timestamp: new Date(),
+            type: 'melody',
+            prompt: `Refine: ${refinementPrompt}`,
+            response,
+            applied: true
+          };
+
+          set((state) => ({
+            currentProject: updatedProject,
+            aiHistory: [...state.aiHistory, interaction],
+            aiGenerating: false
+          }));
+
+          // Save the project
+          await projectManager.saveProject(updatedProject);
+
+        } catch (error) {
+          console.error('AI melody refinement failed:', error);
+          set({ aiGenerating: false });
+        }
+      },
+
+      setAIPreferences: (preferences: Partial<AIPreferences>) => {
+        set((state) => ({
+          aiPreferences: { ...state.aiPreferences, ...preferences }
+        }));
+        aiService.setUserPreferences(preferences);
+      },
+
+      clearAIHistory: () => {
+        set({ aiHistory: [], lastTheoryResponse: null });
+      },
+
+      setAIApiKey: (apiKey: string) => {
+        aiService.setApiKey(apiKey);
+      }
     })),
     { name: 'daw-store' }
   )

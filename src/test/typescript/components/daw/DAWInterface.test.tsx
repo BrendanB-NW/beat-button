@@ -41,13 +41,34 @@ jest.mock('../../../../main/typescript/components/daw/PianoRoll', () => ({
   PianoRoll: () => <div data-testid="piano-roll">Piano Roll</div>
 }));
 
+// Mock the AI Assistant Panel
+jest.mock('../../../../main/typescript/components/ai/AIAssistantPanel', () => ({
+  AIAssistantPanel: ({ visible }: { visible: boolean }) => 
+    visible ? <div data-testid="ai-assistant">AI Assistant</div> : null
+}));
+
+// Mock the AI service
+jest.mock('../../../../main/typescript/services/aiService', () => ({
+  aiService: {
+    setApiKey: jest.fn(),
+    setUserPreferences: jest.fn(),
+    generateMelody: jest.fn(),
+    explainTheory: jest.fn(),
+    createInstrument: jest.fn()
+  }
+}));
+
 describe('DAWInterface', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it('shows welcome screen when no project is loaded', () => {
-    mockUseDAWStore.mockReturnValue(null);
+    mockUseDAWStore.mockReturnValue({
+      currentProject: null,
+      aiAssistantVisible: false,
+      toggleAIAssistant: jest.fn()
+    });
 
     render(<DAWInterface />);
 
@@ -74,7 +95,11 @@ describe('DAWInterface', () => {
       modifiedAt: new Date()
     };
 
-    mockUseDAWStore.mockReturnValue(mockProject);
+    mockUseDAWStore.mockReturnValue({
+      currentProject: mockProject,
+      aiAssistantVisible: false,
+      toggleAIAssistant: jest.fn()
+    });
 
     render(<DAWInterface />);
 
@@ -94,7 +119,11 @@ describe('DAWInterface', () => {
 
   it('always shows transport controls regardless of project state', () => {
     // Test with no project
-    mockUseDAWStore.mockReturnValue(null);
+    mockUseDAWStore.mockReturnValue({
+      currentProject: null,
+      aiAssistantVisible: false,
+      toggleAIAssistant: jest.fn()
+    });
     const { rerender } = render(<DAWInterface />);
     expect(screen.getByTestId('transport-controls')).toBeInTheDocument();
 
@@ -110,7 +139,11 @@ describe('DAWInterface', () => {
       modifiedAt: new Date()
     };
 
-    mockUseDAWStore.mockReturnValue(mockProject);
+    mockUseDAWStore.mockReturnValue({
+      currentProject: mockProject,
+      aiAssistantVisible: false,
+      toggleAIAssistant: jest.fn()
+    });
     rerender(<DAWInterface />);
     expect(screen.getByTestId('transport-controls')).toBeInTheDocument();
   });
