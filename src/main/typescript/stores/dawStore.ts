@@ -23,6 +23,7 @@ interface DAWStore {
   timeline: TimelineState;
   theoryHelperVisible: boolean;
   activeTooltip: TheoryTooltip | null;
+  selectedTrackId: string | null;
   
   // Actions - Project Management
   createNewProject: (name: string, key: Key, tempo: number) => Promise<void>;
@@ -38,10 +39,13 @@ interface DAWStore {
   addTrack: (name: string, instrument: SynthType) => void;
   removeTrack: (trackId: string) => void;
   updateTrack: (trackId: string, updates: Partial<Track>) => void;
+  updateTrackName: (trackId: string, name: string) => void;
+  updateTrackInstrument: (trackId: string, instrument: SynthType) => void;
   muteTrack: (trackId: string, muted: boolean) => void;
   soloTrack: (trackId: string, soloed: boolean) => void;
   setTrackVolume: (trackId: string, volume: number) => void;
   setTrackPan: (trackId: string, pan: number) => void;
+  selectTrack: (trackId: string | null) => void;
   
   // Actions - Note Management
   addNote: (note: Omit<Note, 'id'>) => void;
@@ -148,6 +152,7 @@ export const useDAWStore = create<DAWStore>()(
       
       theoryHelperVisible: false,
       activeTooltip: null,
+      selectedTrackId: null,
 
       // AI State
       aiAssistantVisible: false,
@@ -175,7 +180,8 @@ export const useDAWStore = create<DAWStore>()(
         set((state) => ({
           currentProject: newProject,
           projects: [...state.projects, newProject],
-          tempo: newProject.tempo
+          tempo: newProject.tempo,
+          selectedTrackId: defaultTrack.id // Auto-select the default track
         }));
       },
 
@@ -184,7 +190,8 @@ export const useDAWStore = create<DAWStore>()(
           const project = await projectManager.loadProject(id);
           set({
             currentProject: project,
-            tempo: project.tempo
+            tempo: project.tempo,
+            selectedTrackId: project.tracks.length > 0 ? project.tracks[0].id : null
           });
           
           // Initialize audio engine with project tracks
@@ -252,7 +259,12 @@ export const useDAWStore = create<DAWStore>()(
             tracks: [...currentProject.tracks, newTrack],
             modifiedAt: new Date()
           };
-          set({ currentProject: updatedProject });
+          
+          // Auto-select the new track
+          set({ 
+            currentProject: updatedProject,
+            selectedTrackId: newTrack.id
+          });
           
           // Initialize synthesizer for new track
           audioEngine.createSynthesizer(instrument);
@@ -260,14 +272,23 @@ export const useDAWStore = create<DAWStore>()(
       },
 
       removeTrack: (trackId) => {
-        const { currentProject } = get();
+        const { currentProject, selectedTrackId } = get();
         if (currentProject) {
           const updatedProject = {
             ...currentProject,
             tracks: currentProject.tracks.filter(t => t.id !== trackId),
             modifiedAt: new Date()
           };
-          set({ currentProject: updatedProject });
+          
+          // If the removed track was selected, clear selection or select first remaining track
+          const newSelectedTrackId = selectedTrackId === trackId 
+            ? (updatedProject.tracks.length > 0 ? updatedProject.tracks[0].id : null)
+            : selectedTrackId;
+            
+          set({ 
+            currentProject: updatedProject,
+            selectedTrackId: newSelectedTrackId
+          });
         }
       },
 
@@ -317,19 +338,38 @@ export const useDAWStore = create<DAWStore>()(
         get().updateTrack(trackId, { pan });
       },
 
+      updateTrackName: (trackId, name) => {
+        get().updateTrack(trackId, { name });
+      },
+
+      updateTrackInstrument: (trackId, instrument) => {
+        get().updateTrack(trackId, { instrument: { type: instrument, params: {} } });
+        // Initialize new synthesizer
+        audioEngine.createSynthesizer(instrument);
+      },
+
+      selectTrack: (trackId) => {
+        set({ selectedTrackId: trackId });
+      },
+
       // Note Management Actions
       addNote: (noteData) => {
-        const { currentProject } = get();
+        const { currentProject, selectedTrackId } = get();
         if (currentProject) {
+          // Use selected track if no trackId specified
+          const targetTrackId = noteData.trackId || selectedTrackId;
+          if (!targetTrackId) return; // No track selected
+          
           const newNote: Note = {
             ...noteData,
+            trackId: targetTrackId,
             id: `note_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
           };
           
           const updatedProject = {
             ...currentProject,
             tracks: currentProject.tracks.map(track =>
-              track.id === noteData.trackId
+              track.id === targetTrackId
                 ? { ...track, notes: [...track.notes, newNote] }
                 : track
             ),

@@ -1,9 +1,10 @@
 import React from 'react';
-import { useDAWStore } from '@/stores/dawStore';
+import { useDAWStore } from '../../stores/dawStore';
 
 export function PianoRoll() {
   const {
     currentProject,
+    selectedTrackId,
     pianoRoll,
     addNote,
     selectNotes
@@ -20,8 +21,8 @@ export function PianoRoll() {
     );
   }
 
-  // For now, show the first track
-  const currentTrack = currentProject.tracks[0];
+  // Use the selected track
+  const currentTrack = selectedTrackId ? currentProject.tracks.find(t => t.id === selectedTrackId) : null;
   if (!currentTrack) {
     return (
       <div className="flex-1 flex items-center justify-center bg-gray-900 text-gray-400">

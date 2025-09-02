@@ -101,6 +101,32 @@ export function ProjectManager() {
   const tonics = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
   const modes = ['major', 'minor', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian'];
 
+  const keyDescriptions: Record<string, string> = {
+    'C': 'C - Pure and bright, no sharps or flats. Great for beginners and pop music.',
+    'C#': 'C# - Warm and rich sound. Often used in jazz and contemporary music.',
+    'D': 'D - Bright and energetic. Popular for uplifting songs and folk music.',
+    'D#': 'D# - Deep and mysterious. Common in blues and rock music.',
+    'E': 'E - Vibrant and guitar-friendly. Perfect for rock, pop, and country.',
+    'F': 'F - Gentle and warm. Often used for ballads and classical pieces.',
+    'F#': 'F# - Bright and sparkling. Popular in electronic and modern music.',
+    'G': 'G - Cheerful and open. Great for folk, country, and happy songs.',
+    'G#': 'G# - Dramatic and intense. Often used in dramatic or emotional pieces.',
+    'A': 'A - Natural and resonant. Perfect for acoustic music and sing-alongs.',
+    'A#': 'A# - Rich and full. Common in jazz, blues, and sophisticated music.',
+    'B': 'B - Bright and triumphant. Often used for celebration and victory themes.'
+  };
+
+  const modeDescriptions: Record<string, string> = {
+    'major': 'Major - Happy, bright, and uplifting. Perfect for pop, rock, and cheerful melodies.',
+    'minor': 'Minor - Sad, emotional, and dramatic. Great for ballads and introspective music.',
+    'dorian': 'Dorian - Slightly melancholy but hopeful. Used in folk, jazz, and progressive music.',
+    'phrygian': 'Phrygian - Dark and exotic. Common in flamenco, metal, and Middle Eastern music.',
+    'lydian': 'Lydian - Dreamy and ethereal. Perfect for film scores and ambient music.',
+    'mixolydian': 'Mixolydian - Bluesy and rock-oriented. Great for blues, rock, and country music.',
+    'aeolian': 'Aeolian - Natural minor scale. Melancholic and introspective, used in classical and folk.',
+    'locrian': 'Locrian - Unstable and mysterious. Rarely used, creates tension and unease.'
+  };
+
   return (
     <>
       <div className="flex items-center space-x-2">
@@ -195,9 +221,10 @@ export function ProjectManager() {
                     value={newProjectKey.tonic}
                     onChange={(e) => setNewProjectKey(prev => ({ ...prev, tonic: e.target.value }))}
                     className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    title={keyDescriptions[newProjectKey.tonic]}
                   >
                     {tonics.map(tonic => (
-                      <option key={tonic} value={tonic}>{tonic}</option>
+                      <option key={tonic} value={tonic} title={keyDescriptions[tonic]}>{tonic}</option>
                     ))}
                   </select>
                 </div>
@@ -211,9 +238,10 @@ export function ProjectManager() {
                     value={newProjectKey.mode}
                     onChange={(e) => setNewProjectKey(prev => ({ ...prev, mode: e.target.value }))}
                     className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    title={modeDescriptions[newProjectKey.mode]}
                   >
                     {modes.map(mode => (
-                      <option key={mode} value={mode}>
+                      <option key={mode} value={mode} title={modeDescriptions[mode]}>
                         {mode.charAt(0).toUpperCase() + mode.slice(1)}
                       </option>
                     ))}

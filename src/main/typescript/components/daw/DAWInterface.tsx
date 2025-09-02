@@ -9,8 +9,13 @@ import { useDAWStore } from '../../stores/dawStore';
 
 export function DAWInterface() {
   const currentProject = useDAWStore((state) => state.currentProject);
+  const selectedTrackId = useDAWStore((state) => state.selectedTrackId);
   const aiAssistantVisible = useDAWStore((state) => state.aiAssistantVisible);
   const toggleAIAssistant = useDAWStore((state) => state.toggleAIAssistant);
+  const toggleTheoryHelper = useDAWStore((state) => state.toggleTheoryHelper);
+  
+  // Get the selected track info
+  const selectedTrack = currentProject?.tracks.find(t => t.id === selectedTrackId);
 
   return (
     <div className="flex-1 flex flex-col min-h-0">
@@ -21,12 +26,24 @@ export function DAWInterface() {
           {currentProject && (
             <div className="text-sm text-gray-300">
               {currentProject.name} • {currentProject.key.tonic} {currentProject.key.mode} • {currentProject.tempo} BPM
+              {selectedTrack && (
+                <span className="ml-4 text-blue-300">
+                  🎹 Editing: {selectedTrack.name} ({selectedTrack.instrument.type})
+                </span>
+              )}
             </div>
           )}
         </div>
         
         <div className="flex items-center space-x-2">
           <TransportControls />
+          <button
+            onClick={toggleTheoryHelper}
+            className="p-2 rounded bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors"
+            title="Theory Helper"
+          >
+            ?
+          </button>
           <button
             onClick={toggleAIAssistant}
             className={`p-2 rounded transition-colors ${
@@ -77,8 +94,19 @@ export function DAWInterface() {
             </div>
 
             {/* Piano roll */}
-            <div className="flex-1 min-h-0">
+            <div className="flex-1 min-h-0 relative">
               <PianoRoll />
+              
+              {/* Track selection overlay */}
+              {!selectedTrackId && (
+                <div className="absolute inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-10">
+                  <div className="text-center text-gray-300">
+                    <div className="text-4xl mb-4">🎹</div>
+                    <h3 className="text-lg font-medium mb-2">Select a Track to Edit</h3>
+                    <p className="text-sm text-gray-400">Click on a track in the left panel to start adding notes</p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
