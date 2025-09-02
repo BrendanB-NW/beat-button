@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 import { devtools, subscribeWithSelector } from 'zustand/middleware';
-import { Project, Note, Track, Key, TimeSignature, SynthType } from '@/types/music';
-import { DAWState, PianoRollState, TimelineState, TheoryTooltip } from '@/types/ui';
-import { projectManager } from '@/services/projectManager';
-import { audioEngine } from '@/services/audioEngine';
+import { Project, Note, Track, Key, TimeSignature, SynthType } from '../types/music';
+import { DAWState, PianoRollState, TimelineState, TheoryTooltip } from '../types/ui';
+import { projectManager } from '../services/projectManager';
+import { audioEngine } from '../services/audioEngine';
 
 interface DAWStore {
   // Project state

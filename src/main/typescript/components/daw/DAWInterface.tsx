@@ -4,7 +4,7 @@ import { ProjectManager } from './ProjectManager';
 import { TrackList } from './TrackList';
 import { PianoRoll } from './PianoRoll';
 import { Timeline } from './Timeline';
-import { useDAWStore } from '@/stores/dawStore';
+import { useDAWStore } from '../../stores/dawStore';
 
 export function DAWInterface() {
   const currentProject = useDAWStore((state) => state.currentProject);
