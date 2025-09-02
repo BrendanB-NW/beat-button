@@ -13,17 +13,48 @@ export function TheoryHelper() {
 
   if (!currentProject) {
     return (
-      <div className="w-80 bg-gray-800 border-l border-gray-700 p-4">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-medium">Theory Helper</h3>
-          <button
-            onClick={toggleTheoryHelper}
-            className="text-gray-400 hover:text-gray-200"
-          >
-            <X size={20} />
-          </button>
+      <div className="w-80 bg-gray-800 border-l border-gray-700 flex flex-col">
+        <div className="p-4 border-b border-gray-700">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-medium">Theory Helper</h3>
+            <button
+              onClick={toggleTheoryHelper}
+              className="text-gray-400 hover:text-gray-200"
+            >
+              <X size={20} />
+            </button>
+          </div>
         </div>
-        <p className="text-gray-400">Load a project to see theory suggestions</p>
+        
+        <div className="flex-1 p-4 overflow-y-auto scrollbar-thin">
+          <h4 className="text-sm font-medium mb-2 text-blue-400">Getting Started</h4>
+          <p className="text-gray-400 mb-4">
+            Create a project to unlock personalized theory assistance based on your chosen key and scale.
+          </p>
+          
+          <div className="space-y-4">
+            <div className="p-3 bg-gray-700 rounded-lg">
+              <h5 className="text-sm font-medium mb-2 text-blue-400">Music Theory Basics</h5>
+              <p className="text-xs text-gray-300">
+                Music theory helps you understand how melodies and harmonies work together to create beautiful songs.
+              </p>
+            </div>
+            
+            <div className="p-3 bg-gray-700 rounded-lg">
+              <h5 className="text-sm font-medium mb-2 text-blue-400">Choose Your Key</h5>
+              <p className="text-xs text-gray-300">
+                Start with C Major (no sharps or flats) for the simplest beginning, or A Minor for a more emotional sound.
+              </p>
+            </div>
+            
+            <div className="p-3 bg-gray-700 rounded-lg">
+              <h5 className="text-sm font-medium mb-2 text-blue-400">Build Melodies</h5>
+              <p className="text-xs text-gray-300">
+                Use notes from your chosen scale to create melodies that naturally sound good together.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

@@ -70,15 +70,22 @@ export function ProjectManager() {
     if (!currentProject) return;
     
     try {
-      const blob = await projectManager.exportProject(currentProject, 'wav');
+      // Export as JSON (the ProjectManager only supports JSON export)
+      const projectData = JSON.stringify(currentProject, null, 2);
+      const blob = new Blob([projectData], { type: 'application/json' });
+      
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${currentProject.name}.json`;
+      a.download = `${currentProject.name.replace(/[^a-z0-9]/gi, '_')}.json`;
+      a.style.display = 'none';
+      document.body.appendChild(a);
       a.click();
+      document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch (error) {
       console.error('Failed to export project:', error);
+      alert('Failed to export project. Please try again.');
     }
   };
 
