@@ -4,6 +4,7 @@ import { Plus, FolderOpen, Save, Download, Upload, X } from 'lucide-react';
 import { useDAWStore } from '@/stores/dawStore';
 import { projectManager } from '@/services/projectManager';
 import { ProjectSummary } from '@/types/project';
+import { Tooltip } from '../common/Tooltip';
 
 export function ProjectManager() {
   const {
@@ -213,35 +214,45 @@ export function ProjectManager() {
               
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="project-key" className="block text-sm font-medium mb-1">
-                    Key
-                  </label>
+                  <div className="flex items-center gap-2 mb-1">
+                    <label htmlFor="project-key" className="block text-sm font-medium">
+                      Key
+                    </label>
+                    <Tooltip 
+                      content={keyDescriptions[newProjectKey.tonic]}
+                      position="top"
+                    />
+                  </div>
                   <select
                     id="project-key"
                     value={newProjectKey.tonic}
                     onChange={(e) => setNewProjectKey(prev => ({ ...prev, tonic: e.target.value }))}
                     className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
-                    title={keyDescriptions[newProjectKey.tonic]}
                   >
                     {tonics.map(tonic => (
-                      <option key={tonic} value={tonic} title={keyDescriptions[tonic]}>{tonic}</option>
+                      <option key={tonic} value={tonic}>{tonic}</option>
                     ))}
                   </select>
                 </div>
                 
                 <div>
-                  <label htmlFor="project-mode" className="block text-sm font-medium mb-1">
-                    Mode
-                  </label>
+                  <div className="flex items-center gap-2 mb-1">
+                    <label htmlFor="project-mode" className="block text-sm font-medium">
+                      Mode
+                    </label>
+                    <Tooltip 
+                      content={modeDescriptions[newProjectKey.mode]}
+                      position="top"
+                    />
+                  </div>
                   <select
                     id="project-mode"
                     value={newProjectKey.mode}
                     onChange={(e) => setNewProjectKey(prev => ({ ...prev, mode: e.target.value }))}
                     className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
-                    title={modeDescriptions[newProjectKey.mode]}
                   >
                     {modes.map(mode => (
-                      <option key={mode} value={mode} title={modeDescriptions[mode]}>
+                      <option key={mode} value={mode}>
                         {mode.charAt(0).toUpperCase() + mode.slice(1)}
                       </option>
                     ))}
