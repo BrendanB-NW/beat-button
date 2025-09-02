@@ -1,5 +1,6 @@
 import React from 'react';
-import { useDAWStore } from '@/stores/dawStore';
+import { useDAWStore } from '../../stores/dawStore';
+import { TransportControls } from './TransportControls';
 
 export function Timeline() {
   const {
@@ -67,10 +68,10 @@ export function Timeline() {
   const playheadX = timeline.playheadPosition * beatWidth;
 
   return (
-    <div className="h-full bg-gray-800 relative border-b border-gray-700">
+    <div className="h-full bg-gray-800 relative border-b border-gray-700 flex">
       {/* Timeline ruler */}
       <div
-        className="h-full relative cursor-pointer overflow-x-auto scrollbar-thin"
+        className="flex-1 h-full relative cursor-pointer overflow-x-auto scrollbar-thin"
         style={{ minWidth: totalBeats * beatWidth }}
         onClick={handleTimelineClick}
       >
@@ -108,6 +109,11 @@ export function Timeline() {
           className="absolute top-0 w-0 h-0 border-l-4 border-r-4 border-b-4 border-l-transparent border-r-transparent border-b-red-500 pointer-events-none z-10"
           style={{ left: playheadX - 4 }}
         />
+      </div>
+      
+      {/* Transport Controls in timeline */}
+      <div className="flex items-center justify-center bg-gray-800 border-l border-gray-700 px-4 min-w-fit">
+        <TransportControls />
       </div>
     </div>
   );

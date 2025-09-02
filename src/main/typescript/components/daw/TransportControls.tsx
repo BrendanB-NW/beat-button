@@ -1,6 +1,6 @@
 import React from 'react';
-import { Play, Pause, Square, SkipBack, RotateCcw, RotateCw, HelpCircle } from 'lucide-react';
-import { useDAWStore } from '@/stores/dawStore';
+import { Play, Pause, Square, SkipBack, RotateCcw, RotateCw } from 'lucide-react';
+import { useDAWStore } from '../../stores/dawStore';
 
 export function TransportControls() {
   const {
@@ -14,9 +14,7 @@ export function TransportControls() {
     undo,
     redo,
     canUndo,
-    canRedo,
-    toggleTheoryHelper,
-    theoryHelperVisible
+    canRedo
   } = useDAWStore();
 
   const handlePlay = async () => {
@@ -105,14 +103,6 @@ export function TransportControls() {
         </button>
       </div>
 
-      {/* Theory helper toggle */}
-      <button
-        onClick={toggleTheoryHelper}
-        className={`transport-button ${theoryHelperVisible ? 'active' : ''}`}
-        title="Toggle theory helper"
-      >
-        <HelpCircle size={16} />
-      </button>
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { TransportControls } from './TransportControls';
 import { ProjectManager } from './ProjectManager';
 import { TrackList } from './TrackList';
 import { PianoRoll } from './PianoRoll';
@@ -36,7 +35,6 @@ export function DAWInterface() {
         </div>
         
         <div className="flex items-center space-x-2">
-          <TransportControls />
           <button
             onClick={toggleTheoryHelper}
             className="p-2 rounded bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors"
