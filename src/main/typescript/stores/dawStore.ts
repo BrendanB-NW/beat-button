@@ -452,12 +452,15 @@ export const useDAWStore = create<DAWStore>()(
               // Create synthesizer for track if it doesn't exist
               await audioEngine.createSynthesizer(track.instrument.type, track.id);
               
-              // For now, play all notes immediately for testing
+              // Schedule notes at their proper start times
               for (const note of track.notes) {
                 if (note.startTime >= timeline.playheadPosition) {
                   // Convert beat duration to seconds based on tempo
                   const durationInSeconds = (note.duration * 60) / currentProject.tempo;
-                  audioEngine.playNote(note, durationInSeconds);
+                  // Convert beat start time to seconds based on tempo
+                  const startTimeInSeconds = ((note.startTime - timeline.playheadPosition) * 60) / currentProject.tempo;
+                  
+                  audioEngine.playNote(note, durationInSeconds, startTimeInSeconds);
                 }
               }
             }

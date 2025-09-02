@@ -3,9 +3,10 @@ import { AudioEngine, Synthesizer, ScheduledNote } from '@/types/audio';
 import { Note, Track, SynthType, ExportOptions } from '@/types/music';
 
 class ToneSynthesizer implements Synthesizer {
-  private synth: Tone.Synth | Tone.PolySynth;
+  private synth: Tone.PolySynth;
   private gainNode: Tone.Gain;
   private pannerNode: Tone.Panner;
+  private activeNotes: Map<string, number> = new Map(); // Track active notes by ID -> frequency
 
   constructor(
     public id: string,
@@ -20,16 +21,16 @@ class ToneSynthesizer implements Synthesizer {
     this.pannerNode.connect(Tone.getDestination());
   }
 
-  private createSynthesizer(type: SynthType): Tone.Synth | Tone.PolySynth {
+  private createSynthesizer(type: SynthType): Tone.PolySynth {
     switch (type) {
       case 'sine':
-        return new Tone.Synth({ oscillator: { type: 'sine' } });
+        return new Tone.PolySynth(Tone.Synth, { oscillator: { type: 'sine' } });
       case 'square':
-        return new Tone.Synth({ oscillator: { type: 'square' } });
+        return new Tone.PolySynth(Tone.Synth, { oscillator: { type: 'square' } });
       case 'sawtooth':
-        return new Tone.Synth({ oscillator: { type: 'sawtooth' } });
+        return new Tone.PolySynth(Tone.Synth, { oscillator: { type: 'sawtooth' } });
       case 'triangle':
-        return new Tone.Synth({ oscillator: { type: 'triangle' } });
+        return new Tone.PolySynth(Tone.Synth, { oscillator: { type: 'triangle' } });
       case 'piano':
         return new Tone.PolySynth(Tone.Synth, {
           oscillator: { type: 'triangle' },
@@ -46,7 +47,7 @@ class ToneSynthesizer implements Synthesizer {
           envelope: { attack: 0.5, decay: 0.2, sustain: 0.8, release: 1.5 }
         });
       default:
-        return new Tone.Synth();
+        return new Tone.PolySynth(Tone.Synth);
     }
   }
 
@@ -57,12 +58,22 @@ class ToneSynthesizer implements Synthesizer {
   play(note: Note): void {
     const frequency = this.midiToFrequency(note.pitch);
     const velocity = note.velocity / 127;
+    this.activeNotes.set(note.id, frequency);
     this.synth.triggerAttack(frequency, undefined, velocity);
   }
 
   stop(noteId: string): void {
-    // Use noteId for future reference if needed
-    this.synth.triggerRelease('+0.1');
+    const frequency = this.activeNotes.get(noteId);
+    if (frequency) {
+      this.synth.triggerRelease(frequency, '+0.1');
+      this.activeNotes.delete(noteId);
+    }
+  }
+
+  stopAll(): void {
+    // Stop all currently playing notes
+    this.synth.releaseAll();
+    this.activeNotes.clear();
   }
 
   setVolume(volume: number): void {
@@ -93,8 +104,12 @@ export class WebAudioEngine implements AudioEngine {
   async start(): Promise<void> {
     if (!this.isInitialized) {
       await Tone.start();
-      this.transport.start();
       this.isInitialized = true;
+    }
+    
+    // Always start transport when starting playback
+    if (this.transport.state !== 'started') {
+      this.transport.start();
     }
   }
 
@@ -102,6 +117,13 @@ export class WebAudioEngine implements AudioEngine {
     this.transport.stop();
     this.transport.cancel();
     this.scheduledNotes.clear();
+    
+    // Stop all synthesizers
+    for (const synthesizer of this.synthesizers.values()) {
+      if ('stopAll' in synthesizer) {
+        (synthesizer as ToneSynthesizer).stopAll();
+      }
+    }
   }
 
   async createSynthesizer(type: SynthType, trackId?: string): Promise<Synthesizer> {

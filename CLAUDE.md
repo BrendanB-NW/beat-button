@@ -302,14 +302,22 @@ This specification provides everything needed to recreate "SoundSage" from scrat
 
 ### Recently Fixed Critical Bugs 🔧
 
-#### Audio Playback Issue (Fixed)
+#### Audio Playback Issues (Fixed)
 - **Transport Controls Bug**: Fixed Play button not actually playing piano roll notes
 - **Synthesizer Creation**: Fixed missing synthesizer creation for tracks before playback
 - **Track ID Association**: Ensured synthesizers are properly linked to track IDs
 - **Duration Conversion**: Added proper beat-to-seconds duration conversion based on project tempo
 - **Audio Engine Integration**: Fixed audioEngine.playNote() to find synthesizers by track ID
 
-The Play button now properly creates synthesizers for each track and plays their notes.
+#### Full Melody Playback (Fixed)
+- **Single Note Issue**: Converted all synthesizers to PolySynth for multiple simultaneous notes
+- **Note Scheduling**: Fixed immediate playback to proper time-based scheduling
+- **Start Time Calculation**: Added correct beat-to-seconds conversion for note start times
+- **Stop Functionality**: Fixed Stop and Pause buttons to actually stop audio playback
+- **Active Note Tracking**: Added note ID tracking to stop individual notes properly
+- **Transport Integration**: Ensured Tone.Transport properly handles scheduled events
+
+The Play button now plays complete melodies with proper timing, and Stop/Pause work correctly.
 
 #### UI Visibility Issues (Fixed)
 - **Transport Controls Missing**: Fixed conditional rendering - controls now always visible
