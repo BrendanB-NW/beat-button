@@ -12,7 +12,7 @@ export function PianoRoll() {
 
   if (!currentProject || currentProject.tracks.length === 0) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-gray-900 text-gray-400">
+      <div className="flex-1 flex items-center justify-center bg-earth-bg-900 text-earth-bg-400">
         <div className="text-center">
           <p className="text-lg mb-2">No tracks available</p>
           <p className="text-sm">Add a track to start composing</p>
@@ -25,7 +25,7 @@ export function PianoRoll() {
   const currentTrack = selectedTrackId ? currentProject.tracks.find(t => t.id === selectedTrackId) : null;
   if (!currentTrack) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-gray-900 text-gray-400">
+      <div className="flex-1 flex items-center justify-center bg-earth-bg-900 text-earth-bg-400">
         <p>No track selected</p>
       </div>
     );
@@ -79,8 +79,8 @@ export function PianoRoll() {
       keys.push(
         <div
           key={pitch}
-          className={`absolute left-0 w-14 border-b border-gray-600 flex items-center justify-end pr-2 text-xs ${
-            isWhite ? 'piano-white-key text-gray-800' : 'piano-black-key text-gray-200'
+          className={`absolute left-0 w-14 border-b border-earth-bg-600 flex items-center justify-end pr-2 text-xs ${
+            isWhite ? 'piano-white-key text-earth-bg-800' : 'piano-black-key text-earth-bg-200'
           }`}
           style={{
             top: y,
@@ -107,7 +107,7 @@ export function PianoRoll() {
         <div
           key={`h-${pitch}`}
           className={`absolute left-0 right-0 border-b ${
-            isWhite ? 'border-gray-700' : 'border-gray-800'
+            isWhite ? 'border-earth-bg-700' : 'border-earth-bg-800'
           }`}
           style={{ top: y }}
         />
@@ -174,16 +174,16 @@ export function PianoRoll() {
   };
 
   return (
-    <div className="flex-1 flex bg-gray-900 overflow-hidden">
+    <div className="flex-1 flex bg-earth-bg-900 overflow-hidden">
       {/* Piano keys column */}
-      <div className="w-14 bg-gray-800 border-r border-gray-700 relative flex-shrink-0">
+      <div className="w-14 bg-earth-bg-800 border-r border-earth-bg-700 relative flex-shrink-0">
         {renderPianoKeys()}
       </div>
       
       {/* Main grid area */}
       <div className="flex-1 relative overflow-auto scrollbar-thin">
         <div
-          className="relative cursor-crosshair"
+          className="relative cursor-crosshair bg-earth-bg-800"
           style={{
             width: totalBeats * beatWidth + 60,
             height: pitchRange * noteHeight

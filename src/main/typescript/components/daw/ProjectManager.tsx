@@ -225,12 +225,12 @@ export function ProjectManager() {
       >
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel className="bg-gray-800 rounded-lg p-6 w-full max-w-md">
+          <Dialog.Panel className="bg-earth-bg-800 border border-earth-bg-600 rounded-lg p-6 w-full max-w-md">
             <div className="flex justify-between items-center mb-4">
-              <Dialog.Title className="text-lg font-medium">New Project</Dialog.Title>
+              <Dialog.Title className="text-lg font-medium text-earth-bg-100">New Project</Dialog.Title>
               <button
                 onClick={() => setShowNewProjectDialog(false)}
-                className="text-gray-400 hover:text-gray-200"
+                className="text-earth-bg-400 hover:text-earth-bg-200"
               >
                 <X size={20} />
               </button>
@@ -238,7 +238,7 @@ export function ProjectManager() {
             
             <div className="space-y-4">
               <div>
-                <label htmlFor="project-name" className="block text-sm font-medium mb-1">
+                <label htmlFor="project-name" className="block text-sm font-medium mb-1 text-earth-bg-200">
                   Project Name
                 </label>
                 <input
@@ -246,10 +246,10 @@ export function ProjectManager() {
                   type="text"
                   value={newProjectName}
                   onChange={(e) => handleProjectNameChange(e.target.value)}
-                  className={`w-full px-3 py-2 bg-gray-700 border rounded-md focus:outline-none focus:ring-2 ${
+                  className={`w-full px-3 py-2 bg-earth-bg-700 border rounded-md focus:outline-none focus:ring-2 text-earth-bg-100 ${
                     projectNameError 
                       ? 'border-red-500 focus:ring-red-500' 
-                      : 'border-gray-600 focus:ring-primary-500'
+                      : 'border-earth-bg-600 focus:ring-earth-purple-500'
                   }`}
                   placeholder="My Awesome Beat"
                 />
@@ -261,7 +261,7 @@ export function ProjectManager() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <label htmlFor="project-key" className="block text-sm font-medium">
+                    <label htmlFor="project-key" className="block text-sm font-medium text-earth-bg-200">
                       Key
                     </label>
                     <Tooltip 
@@ -273,7 +273,7 @@ export function ProjectManager() {
                     id="project-key"
                     value={newProjectKey.tonic}
                     onChange={(e) => setNewProjectKey(prev => ({ ...prev, tonic: e.target.value }))}
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-3 py-2 bg-earth-bg-700 border border-earth-bg-600 rounded-md focus:outline-none focus:ring-2 focus:ring-earth-purple-500 text-earth-bg-100"
                   >
                     {tonics.map(tonic => (
                       <option key={tonic} value={tonic}>{tonic}</option>
@@ -283,7 +283,7 @@ export function ProjectManager() {
                 
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <label htmlFor="project-mode" className="block text-sm font-medium">
+                    <label htmlFor="project-mode" className="block text-sm font-medium text-earth-bg-200">
                       Mode
                     </label>
                     <Tooltip 
@@ -295,7 +295,7 @@ export function ProjectManager() {
                     id="project-mode"
                     value={newProjectKey.mode}
                     onChange={(e) => setNewProjectKey(prev => ({ ...prev, mode: e.target.value }))}
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-3 py-2 bg-earth-bg-700 border border-earth-bg-600 rounded-md focus:outline-none focus:ring-2 focus:ring-earth-purple-500 text-earth-bg-100"
                   >
                     {modes.map(mode => (
                       <option key={mode} value={mode}>
@@ -308,7 +308,7 @@ export function ProjectManager() {
               
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <label htmlFor="project-tempo" className="block text-sm font-medium">
+                  <label htmlFor="project-tempo" className="block text-sm font-medium text-earth-bg-200">
                     Tempo (BPM)
                   </label>
                   <Tooltip 
@@ -323,7 +323,7 @@ export function ProjectManager() {
                   max="200"
                   value={newProjectTempo}
                   onChange={(e) => setNewProjectTempo(parseInt(e.target.value))}
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="w-full px-3 py-2 bg-earth-bg-700 border border-earth-bg-600 rounded-md focus:outline-none focus:ring-2 focus:ring-earth-purple-500 text-earth-bg-100"
                 />
               </div>
             </div>
@@ -331,13 +331,13 @@ export function ProjectManager() {
             <div className="flex justify-end space-x-3 mt-6">
               <button
                 onClick={() => setShowNewProjectDialog(false)}
-                className="px-4 py-2 text-gray-300 hover:text-white"
+                className="px-4 py-2 text-earth-bg-300 hover:text-earth-bg-100"
               >
                 Cancel
               </button>
               <button
                 onClick={handleNewProject}
-                className="px-4 py-2 bg-primary-600 hover:bg-primary-500 rounded-md font-medium"
+                className="px-4 py-2 bg-earth-purple-600 hover:bg-earth-purple-500 rounded-md font-medium text-earth-bg-50"
               >
                 Create
               </button>
@@ -354,12 +354,12 @@ export function ProjectManager() {
       >
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel className="bg-gray-800 rounded-lg p-6 w-full max-w-2xl">
+          <Dialog.Panel className="bg-earth-bg-800 border border-earth-bg-600 rounded-lg p-6 w-full max-w-2xl">
             <div className="flex justify-between items-center mb-4">
-              <Dialog.Title className="text-lg font-medium">Load Project</Dialog.Title>
+              <Dialog.Title className="text-lg font-medium text-earth-bg-100">Load Project</Dialog.Title>
               <button
                 onClick={() => setShowLoadProjectDialog(false)}
-                className="text-gray-400 hover:text-gray-200"
+                className="text-earth-bg-400 hover:text-earth-bg-200"
               >
                 <X size={20} />
               </button>
@@ -367,7 +367,7 @@ export function ProjectManager() {
             
             <div className="max-h-96 overflow-y-auto">
               {projects.length === 0 ? (
-                <div className="text-center py-8 text-gray-400">
+                <div className="text-center py-8 text-earth-bg-400">
                   No projects found. Create your first project!
                 </div>
               ) : (
@@ -376,13 +376,13 @@ export function ProjectManager() {
                     <button
                       key={project.id}
                       onClick={() => handleLoadProject(project.id)}
-                      className="p-4 bg-gray-700 hover:bg-gray-600 rounded-lg text-left transition-colors"
+                      className="p-4 bg-earth-bg-700 hover:bg-earth-bg-600 rounded-lg text-left transition-colors"
                     >
-                      <div className="font-medium">{project.name}</div>
-                      <div className="text-sm text-gray-400 mt-1">
+                      <div className="font-medium text-earth-bg-100">{project.name}</div>
+                      <div className="text-sm text-earth-bg-300 mt-1">
                         {project.key} • {project.tempo} BPM • {project.trackCount} tracks
                       </div>
-                      <div className="text-xs text-gray-500 mt-1">
+                      <div className="text-xs text-earth-bg-400 mt-1">
                         Modified {new Date(project.modifiedAt).toLocaleDateString()}
                       </div>
                     </button>
