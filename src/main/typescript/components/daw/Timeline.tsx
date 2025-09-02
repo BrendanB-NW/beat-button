@@ -6,10 +6,48 @@ export function Timeline() {
   const {
     currentProject,
     timeline,
-    setPlayheadPosition
+    setPlayheadPosition,
+    toggleTheoryHelper,
+    toggleAIAssistant,
+    aiAssistantVisible
   } = useDAWStore();
 
-  if (!currentProject) return null;
+  if (!currentProject) {
+    // Show timeline with controls even without a project
+    return (
+      <div className="h-full bg-gray-800 relative border-b border-gray-700 flex min-h-16">
+        {/* Empty timeline ruler */}
+        <div className="flex-1 h-full relative bg-gray-700 flex items-center justify-center">
+          <span className="text-gray-500 text-sm">Create a project to see timeline</span>
+        </div>
+        
+        {/* Transport Controls in timeline */}
+        <div className="flex items-center justify-center bg-gray-800 border-l border-gray-700 px-4 min-w-fit">
+          <div className="flex items-center space-x-2">
+            <TransportControls />
+            <button
+              onClick={toggleTheoryHelper}
+              className="p-2 rounded bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors"
+              title="Theory Helper"
+            >
+              ?
+            </button>
+            <button
+              onClick={toggleAIAssistant}
+              className={`p-2 rounded transition-colors ${
+                aiAssistantVisible 
+                  ? 'bg-blue-600 text-white' 
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+              title="AI Assistant"
+            >
+              🤖
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const beatsPerMeasure = currentProject.timeSignature.numerator;
   const totalBeats = 64; // Show 16 measures by default
@@ -68,7 +106,7 @@ export function Timeline() {
   const playheadX = timeline.playheadPosition * beatWidth;
 
   return (
-    <div className="h-full bg-gray-800 relative border-b border-gray-700 flex">
+    <div className="h-full bg-gray-800 relative border-b border-gray-700 flex min-h-16">
       {/* Timeline ruler */}
       <div
         className="flex-1 h-full relative cursor-pointer overflow-x-auto scrollbar-thin"
@@ -113,7 +151,27 @@ export function Timeline() {
       
       {/* Transport Controls in timeline */}
       <div className="flex items-center justify-center bg-gray-800 border-l border-gray-700 px-4 min-w-fit">
-        <TransportControls />
+        <div className="flex items-center space-x-2">
+          <TransportControls />
+          <button
+            onClick={toggleTheoryHelper}
+            className="p-2 rounded bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors"
+            title="Theory Helper"
+          >
+            ?
+          </button>
+          <button
+            onClick={toggleAIAssistant}
+            className={`p-2 rounded transition-colors ${
+              aiAssistantVisible 
+                ? 'bg-blue-600 text-white' 
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            }`}
+            title="AI Assistant"
+          >
+            🤖
+          </button>
+        </div>
       </div>
     </div>
   );

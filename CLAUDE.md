@@ -305,6 +305,8 @@ This specification provides everything needed to recreate "B. Boyd's Bangin' Bea
 - **Form Validation UX**: Real-time error clearing when user starts typing, with red border styling for invalid inputs
 - **Transport Controls Repositioning**: Moved playback controls from top toolbar to timeline header area for better workflow integration
 - **UI Layout Optimization**: Improved transport controls placement to match professional DAW conventions
+- **Timeline Always Visible**: Fixed timeline visibility issue - timeline now appears at top of interface even without project loaded
+- **Complete Control Integration**: Added AI Assistant and Theory Helper buttons to timeline area alongside transport controls
 
 #### Test Infrastructure Issues (Fixed)  
 - **Jest Configuration**: Resolved moduleNameMapping warnings and import path issues
