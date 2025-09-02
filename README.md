@@ -1,171 +1,171 @@
-# B. Boyd's Bangin' Beat Button 🎵
+# B. Boyd's Bangin' Beat Button
 
-**A Web-Based Digital Audio Workstation for Learning Music Theory Through Creation**
-
-B. Boyd's Bangin' Beat Button is an innovative DAW that teaches music theory as you compose. Create melodies with real-time synthesis while learning the "why" behind every musical choice.
+A modern, web-based Digital Audio Workstation (DAW) focused on educational melody creation with integrated music theory guidance. Built with React, TypeScript, and Web Audio API.
 
 ## ✨ Features
 
-### 🎹 Intuitive Music Creation
-- **Real-time audio synthesis** - Hear your changes instantly
-- **Multiple instrument types** - From pure synthesis to realistic instruments
-- **Adjustable tempo** - Find your perfect rhythm (60-200 BPM)
-- **Multi-track composition** - Layer melodies and harmonies
+### 🎵 Core Audio Capabilities
+- **Real-time audio synthesis** using Web Audio API and Tone.js
+- **Multiple synthesis modes**: Pure waveforms (sine, square, sawtooth, triangle) and realistic instrument simulation (piano, guitar, strings)
+- **Adjustable tempo** from 60-200 BPM with real-time changes
+- **Multi-track support** for layered melodies and harmonies
+- **Precision timing** down to 16th note subdivisions
 
-### 📚 Built-in Music Theory Teacher
-- **Smart suggestions** - Get chord progression and melody ideas
-- **Contextual tooltips** - Learn theory concepts as you need them
-- **Key and scale awareness** - Work in any musical key with guidance
-- **Non-intrusive learning** - Theory help only when you want it
+### 🎓 Music Theory Integration
+- **Modal theory assistance** with pop-up explanations and tooltips
+- **Key/scale awareness** with project-specific key signatures
+- **Chord progression suggestions** based on selected key and mood
+- **Real-time melody analysis** with educational feedback
+- **Non-intrusive learning** - suggestions only, never blocking creativity
+
+### 🎹 Professional DAW Interface
+- **Intuitive piano roll editor** with drag-and-drop note editing
+- **Timeline view** for horizontal arrangement of musical phrases
+- **Track management** with individual volume, pan, mute, and solo controls
+- **Transport controls** with play, pause, stop, and tempo adjustment
+- **Theory helper panel** with toggleable assistance sidebar
 
 ### 💾 Project Management
-- **Save and load projects** - Never lose your musical ideas
-- **Export high-quality audio** - WAV and MP3 export for your compositions
-- **Stem export** - Export individual tracks for further production
-- **Auto-save** - Focus on creating, not saving
+- **Local browser storage** for session persistence
+- **Project import/export** in JSON format
+- **Comprehensive undo/redo** system (50+ actions)
+- **Auto-save functionality** to prevent data loss
 
-### 🎯 Perfect for Music Theory Novices
-- **No rules enforced** - Creativity comes first, theory is guidance
-- **Clear explanations** - Jargon-free learning for real understanding
-- **Progressive learning** - Start simple, grow your knowledge over time
+## 🚀 Quick Start
 
-## 🚀 Getting Started
+### Prerequisites
+- Node.js 18+ and npm
+- Modern web browser with Web Audio API support (Chrome, Firefox, Safari, Edge)
 
-### Quick Start
-1. **Open your browser** - No installation required!
-2. **Click "New Project"** - Start with a blank canvas
-3. **Choose your key** - Or let the app suggest one based on your mood
-4. **Start creating** - Click notes on the piano roll or use your computer keyboard
-5. **Ask for help** - Click the "?" button anytime for music theory insights
+### Installation
 
-### Your First Composition
-1. **Set the mood** - Tell the app what feeling you're going for
-2. **Pick an instrument** - Try the warm piano or bright synthesizer
-3. **Place some notes** - Click on the piano roll to add notes
-4. **Get suggestions** - Ask "What chord would work well here?"
-5. **Experiment freely** - There are no wrong notes, only learning opportunities!
+1. **Clone and setup**
+   ```bash
+   git clone <repository-url>
+   cd beat-button
+   npm install
+   ```
 
-## 🎵 Understanding the Interface
+2. **Start development server**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-### Main Areas
-- **Piano Roll Editor** - Visual note placement and editing
-- **Track Panel** - Manage multiple instrument layers
-- **Transport Controls** - Play, pause, stop, and tempo adjustment
-- **Theory Helper** - Your musical knowledge companion
-- **Instrument Selector** - Switch between sounds and synthesis types
+3. **Build for production**
+   ```bash
+   npm run build
+   npm run preview
+   ```
 
-### Keyboard Shortcuts
-- `Space` - Play/Pause
-- `R` - Record
-- `Delete` - Remove selected notes
-- `Ctrl+Z` - Undo
-- `Ctrl+Y` - Redo
-- `?` - Show theory help for current selection
+## 🎮 Usage Guide
 
-## 🔧 Advanced Features
+### Creating Your First Project
 
-### Synthesis Options
-- **Pure Synthesis** - Sine, square, sawtooth, and triangle waves
-- **Realistic Instruments** - Piano, guitar, strings, and more
-- **Custom Patches** - Blend synthesis types for unique sounds
-- **Effects** - Reverb, delay, and filtering
+1. **New Project**: Click the "+" button in the toolbar
+2. **Configure**: Set project name, key signature (C Major recommended for beginners), and tempo
+3. **Add Tracks**: Use the "Add Track" button in the left sidebar
+4. **Choose Instruments**: Select from synthesizer types or realistic instruments
 
-### Music Theory Integration
-- **Chord Analysis** - Understand the harmony in your compositions
-- **Scale Highlighting** - See which notes fit your chosen key
-- **Progression Suggestions** - Discover new chord sequences
-- **Melody Analysis** - Learn why your melodies work (or how to improve them)
+### Composing Music
 
-### Export Options
-- **Full Mix** - Export your complete composition
-- **Individual Stems** - Export each track separately
-- **Multiple Formats** - WAV for quality, MP3 for sharing
-- **Quality Settings** - Choose bitrate and sample rate
+1. **Piano Roll**: Click in the main grid to place notes
+   - Vertical axis = pitch (higher = higher notes)
+   - Horizontal axis = time (left to right)
+   - Notes snap to grid for easy timing
 
-## 🎓 Learning Music Theory
+2. **Theory Helper**: Toggle the "?" button to show:
+   - **Chords tab**: Common chords in your key
+   - **Scales tab**: Notes that work well together
+   - **Tips tab**: Music theory guidance for beginners
 
-### How Theory Integration Works
-B. Boyd's Bangin' Beat Button doesn't overwhelm you with theory. Instead:
+3. **Playback**: Use transport controls to play, pause, or stop your composition
 
-1. **Create first** - Make music that sounds good to you
-2. **Ask questions** - "Why does this chord sound happy?"
-3. **Get clear answers** - Simple explanations without jargon
-4. **Apply knowledge** - Use what you learn in your next creation
+### Track Controls
+- **Volume**: Adjust individual track levels
+- **Pan**: Position tracks in stereo field (left/right)
+- **Mute**: Temporarily silence tracks
+- **Solo**: Listen to one track only
 
-### Example Learning Moments
-- **"This chord feels sad"** → Learn about minor vs major tonality
-- **"What comes next?"** → Explore chord progressions and voice leading  
-- **"This melody is boring"** → Discover rhythm variations and melodic intervals
-- **"How do I make it jazzy?"** → Learn about extended chords and syncopation
+## 🏗️ Technical Architecture
 
-## 🛠️ Technical Requirements
+### Technology Stack
+- **Frontend**: React 18+ with TypeScript
+- **Audio**: Web Audio API with Tone.js
+- **State Management**: Zustand
+- **UI Components**: Headless UI with Tailwind CSS
+- **Build System**: Vite
+- **Testing**: Jest + React Testing Library + Playwright
 
-### Browser Support
-- **Chrome/Chromium** 88+ (Recommended)
-- **Firefox** 85+
-- **Safari** 14+
-- **Edge** 88+
+### Project Structure
+```
+src/main/typescript/
+├── components/
+│   ├── daw/                 # Main DAW interface components
+│   ├── common/              # Shared UI components
+│   └── theory/              # Music theory helper components
+├── services/
+│   ├── audioEngine.ts       # Web Audio API integration
+│   ├── musicTheory.ts       # Music theory calculations
+│   └── projectManager.ts   # Project save/load logic
+├── stores/
+│   └── dawStore.ts          # Zustand state management
+├── types/                   # TypeScript type definitions
+└── hooks/                   # Custom React hooks
+```
 
-### System Requirements
-- **RAM**: 4GB minimum, 8GB recommended
-- **Audio**: Built-in speakers or headphones
-- **Input**: Mouse/trackpad and keyboard
-- **Storage**: 50MB for application, additional space for saved projects
+## 🧪 Testing
 
-### Optimal Experience
-- **Headphones recommended** for accurate audio monitoring
-- **Full-screen mode** for complete interface access
-- **Stable internet** for initial loading (runs offline after loading)
+### Run Test Suite
+```bash
+npm run test                # Single run
+npm run test:watch          # Watch mode
+npm run test:coverage       # With coverage report
+```
 
-## 🎯 Tips for Best Results
+## 📱 Browser Compatibility
 
-### Getting Great Sounds
-- **Experiment with velocity** - Note volume affects instrument character
-- **Use timing variations** - Perfect timing can sound robotic
-- **Layer instruments** - Combine synthesis types for rich textures
-- **Don't forget dynamics** - Quiet parts make loud parts more impactful
+### Fully Supported
+- Chrome 66+
+- Firefox 60+
+- Safari 14.1+
+- Edge 79+
 
-### Learning Effectively
-- **Start with questions** - "What makes this sound good?"
-- **Compare examples** - Try the same melody in different keys
-- **Break the rules** - Theory is guidance, not law
-- **Save experiments** - Keep projects that teach you something
+## 🐛 Troubleshooting
 
-### Workflow Tips
-- **Name your projects** - Future you will thank you
-- **Use auto-save** - But save manually before major changes
-- **Export often** - Share your progress and get feedback
-- **Keep it fun** - Learning happens best when you're enjoying yourself
+### Common Issues
 
-## 🆘 Troubleshooting
+**Audio not playing**
+- Check browser audio permissions
+- Ensure headphones/speakers are connected
+- Try refreshing the page to restart audio context
 
-### Audio Issues
-- **No sound?** Check browser audio permissions and system volume
-- **Crackling audio?** Try increasing buffer size in settings
-- **High latency?** Close other browser tabs and applications
+**Performance issues**
+- Close other audio applications
+- Reduce number of simultaneous tracks
+- Check browser's task manager for memory usage
 
-### Performance Issues  
-- **Slow interface?** Try reducing the number of active tracks
-- **Browser freezing?** Check available RAM and close other applications
+**Project not saving**
+- Ensure browser allows local storage
+- Check available storage space
+- Try clearing browser cache if issues persist
 
-### Project Issues
-- **Can't load project?** Check browser storage permissions
-- **Export failing?** Try exporting smaller sections or reducing quality
+## 📚 Educational Philosophy
 
-## 🤝 Support & Community
+B. Boyd's Bangin' Beat Button is designed with music education in mind:
 
-### Getting Help
-- **Built-in help** - Click "?" anywhere in the interface
-- **Tooltips** - Hover over any control for quick explanations
-- **Theory explanations** - Every musical concept explained clearly
+- **Progressive Learning**: Start simple, add complexity gradually
+- **Theory Integration**: Learn theory through practical application
+- **Non-Judgmental**: No "wrong" notes, only learning opportunities
+- **Immediate Feedback**: Hear your ideas instantly
+- **Exploration Encouraged**: Experiment with different sounds and styles
 
-### Sharing Your Music
-- **Export and share** - High-quality audio ready for any platform
-- **Save project files** - Share your entire composition for others to learn from
-- **Show your process** - Export stems to demonstrate your arrangement choices
+## 📄 License
+
+This project is licensed under the MIT License.
 
 ---
 
-**Ready to start creating?** Open B. Boyd's Bangin' Beat Button in your browser and let the music theory learning begin! 🎵
+Made with ❤️ for music education and creative expression.
 
-*No installation required • Works offline • Your data stays private*
+**Start creating music today - no experience required!** 🎵

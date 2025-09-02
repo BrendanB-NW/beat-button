@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom scrollbar styles */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #4B5563 #1F2937;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #1F2937;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #4B5563;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #6B7280;
+}
+
+/* Piano key styles */
+.piano-white-key {
+  @apply bg-white border border-gray-300 hover:bg-gray-50 active:bg-gray-100;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.piano-black-key {
+  @apply bg-gray-800 hover:bg-gray-700 active:bg-gray-600;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Note block styles */
+.note-block {
+  @apply bg-blue-500 border border-blue-600 rounded cursor-pointer;
+  transition: all 0.1s ease;
+}
+
+.note-block:hover {
+  @apply bg-blue-400 border-blue-500;
+}
+
+.note-block.selected {
+  @apply bg-blue-600 border-blue-700 ring-2 ring-blue-300;
+}
+
+/* Grid lines */
+.grid-line-measure {
+  @apply border-r border-gray-600;
+}
+
+.grid-line-beat {
+  @apply border-r border-gray-700;
+}
+
+.grid-line-subdivision {
+  @apply border-r border-gray-800;
+}
+
+/* Transport controls */
+.transport-button {
+  @apply px-4 py-2 rounded bg-gray-700 hover:bg-gray-600 active:bg-gray-800 text-white font-medium transition-colors;
+}
+
+.transport-button.active {
+  @apply bg-blue-600 hover:bg-blue-500 active:bg-blue-700;
+}
+
+/* Track controls */
+.track-header {
+  @apply bg-gray-800 border-b border-gray-700 p-3 min-w-0;
+}
+
+.track-control-button {
+  @apply px-2 py-1 rounded text-xs font-medium transition-colors;
+}
+
+.mute-button {
+  @apply bg-yellow-600 hover:bg-yellow-500 text-white;
+}
+
+.mute-button.active {
+  @apply bg-yellow-500 hover:bg-yellow-400;
+}
+
+.solo-button {
+  @apply bg-red-600 hover:bg-red-500 text-white;
+}
+
+.solo-button.active {
+  @apply bg-red-500 hover:bg-red-400;
+}
+
+/* Faders and knobs */
+.volume-fader {
+  @apply w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer;
+}
+
+.volume-fader::-webkit-slider-thumb {
+  @apply appearance-none w-4 h-4 bg-blue-500 rounded-full cursor-pointer;
+}
+
+.volume-fader::-moz-range-thumb {
+  @apply w-4 h-4 bg-blue-500 rounded-full cursor-pointer border-none;
+}
+
+/* Theory helper styles */
+.theory-tooltip {
+  @apply absolute z-50 bg-gray-900 border border-gray-600 rounded-lg p-3 shadow-lg max-w-xs;
+}
+
+.theory-highlight {
+  @apply bg-secondary-600 bg-opacity-30 border border-secondary-500 rounded;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 768px) {
+  .track-header {
+    min-width: 150px;
+  }
+  
+  .piano-roll-container {
+    font-size: 12px;
+  }
+}
+
+/* Animation classes */
+.pulse-playing {
+  animation: pulse-playing 1s ease-in-out infinite;
+}
+
+@keyframes pulse-playing {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Focus styles for accessibility */
+.focus-visible:focus {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-900;
+}
