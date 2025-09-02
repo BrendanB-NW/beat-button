@@ -253,6 +253,9 @@ This specification provides everything needed to recreate "B. Boyd's Bangin' Bea
 - **Project Manager**: Create, save, load, and export project functionality
 - **Welcome Screen**: User-friendly no-project state with clear instructions
 - **Theory Helper**: Toggleable theory assistance panel (? button implemented)
+- **Track Selection**: Visual track selection with blue highlighting and context display
+- **Multi-track Editing**: Clear indication of which track is being edited in piano roll
+- **Project Setup Tooltips**: Helpful descriptions for Key and Mode selection during project creation
 - **Responsive Layout**: Flexbox-based responsive design
 
 #### Project Management (Implemented)
