@@ -79,7 +79,7 @@ export function DAWInterface() {
           {/* Main editor area */}
           <div className="flex-1 flex flex-col min-h-0">
             {/* Timeline - Above piano roll in project area */}
-            <div className="h-20 border-b border-gray-700 bg-gray-800">
+            <div className="h-20 border-b border-gray-700">
               <Timeline />
             </div>
 

@@ -12,7 +12,9 @@ export function Timeline() {
     aiAssistantVisible
   } = useDAWStore();
 
-  if (!currentProject) return null;
+  if (!currentProject || !timeline) {
+    return null;
+  }
 
   const beatsPerMeasure = currentProject.timeSignature.numerator;
   const totalBeats = 64; // Show 16 measures by default
@@ -71,53 +73,42 @@ export function Timeline() {
   const playheadX = timeline.playheadPosition * beatWidth;
 
   return (
-    <div className="h-full bg-gray-800 relative border-b border-gray-700 flex min-h-16">
-      {/* Timeline ruler */}
-      <div
-        className="flex-1 h-full relative cursor-pointer overflow-x-auto scrollbar-thin"
-        style={{ minWidth: totalBeats * beatWidth }}
-        onClick={handleTimelineClick}
-      >
-        {renderTimelineMarkers()}
-        
-        {/* Loop markers */}
-        {timeline.loopEnabled && (
-          <>
+    <div className="h-full bg-gray-800 relative border-b border-gray-700 flex">
+      {/* Timeline ruler section */}
+      <div className="flex-1 h-full relative bg-gray-800 border-r border-gray-600">
+        <div className="h-full w-full overflow-x-auto">
+          {/* Simple timeline with measure numbers */}
+          <div className="h-full relative flex items-center" style={{ minWidth: totalBeats * beatWidth }}>
+            {/* Measure markers - simplified */}
+            {Array.from({ length: Math.ceil(totalBeats / beatsPerMeasure) }, (_, i) => (
+              <div key={i} className="absolute top-2 text-xs text-gray-400" style={{ left: i * beatsPerMeasure * beatWidth + 4 }}>
+                {i + 1}
+              </div>
+            ))}
+            
+            {/* Beat lines - simplified */}
+            {Array.from({ length: totalBeats }, (_, i) => (
+              <div 
+                key={i} 
+                className={`absolute top-4 bottom-0 pointer-events-none ${i % beatsPerMeasure === 0 ? 'border-l-2 border-gray-500' : 'border-l border-gray-600'}`}
+                style={{ left: i * beatWidth }}
+              />
+            ))}
+            
+            {/* Playhead */}
             <div
-              className="absolute top-0 bottom-0 bg-primary-600 bg-opacity-20 pointer-events-none"
-              style={{
-                left: timeline.loopStart * beatWidth,
-                width: (timeline.loopEnd - timeline.loopStart) * beatWidth
-              }}
+              className="absolute top-0 bottom-0 border-l-2 border-red-500 pointer-events-none z-10"
+              style={{ left: playheadX }}
             />
-            <div
-              className="absolute top-0 bottom-0 border-l-2 border-primary-500 pointer-events-none"
-              style={{ left: timeline.loopStart * beatWidth }}
-            />
-            <div
-              className="absolute top-0 bottom-0 border-l-2 border-primary-500 pointer-events-none"
-              style={{ left: timeline.loopEnd * beatWidth }}
-            />
-          </>
-        )}
-        
-        {/* Playhead */}
-        <div
-          className="absolute top-0 bottom-0 border-l-2 border-red-500 pointer-events-none z-10"
-          style={{ left: playheadX }}
-        />
-        
-        {/* Playhead triangle */}
-        <div
-          className="absolute top-0 w-0 h-0 border-l-4 border-r-4 border-b-4 border-l-transparent border-r-transparent border-b-red-500 pointer-events-none z-10"
-          style={{ left: playheadX - 4 }}
-        />
+          </div>
+        </div>
       </div>
       
-      {/* Transport Controls in timeline */}
-      <div className="flex items-center justify-center bg-gray-800 border-l border-gray-700 px-4 min-w-fit">
-        <div className="flex items-center space-x-2">
+      {/* Transport Controls section */}
+      <div className="w-80 bg-gray-800 border-l border-gray-700 flex items-center justify-center px-4">
+        <div className="flex items-center space-x-3">
           <TransportControls />
+          <div className="w-px h-8 bg-gray-600"></div>
           <button
             onClick={toggleTheoryHelper}
             className="p-2 rounded bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors"
