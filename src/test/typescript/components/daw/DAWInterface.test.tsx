@@ -59,22 +59,34 @@ jest.mock('../../../../main/typescript/services/aiService', () => ({
 }));
 
 describe('DAWInterface', () => {
+  const mockProject = {
+    id: 'test-project',
+    name: 'Test Project',
+    key: { tonic: 'C', mode: 'major' },
+    tempo: 120,
+    timeSignature: { numerator: 4, denominator: 4 },
+    tracks: [],
+    createdAt: new Date(),
+    modifiedAt: new Date()
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it('shows welcome screen when no project is loaded', () => {
-    mockUseDAWStore.mockReturnValue({
-      currentProject: null,
-      aiAssistantVisible: false,
-      toggleAIAssistant: jest.fn()
-    });
+    // Mock the individual selector calls in the component
+    mockUseDAWStore
+      .mockReturnValueOnce(null) // currentProject
+      .mockReturnValueOnce(null) // selectedTrackId 
+      .mockReturnValueOnce(false) // aiAssistantVisible
+      .mockReturnValueOnce(jest.fn()) // toggleAIAssistant
+      .mockReturnValueOnce(jest.fn()); // toggleTheoryHelper
 
     render(<DAWInterface />);
 
     expect(screen.getByText('Welcome to B. Boyd\'s Bangin\' Beat Button')).toBeInTheDocument();
     expect(screen.getByText('Create a new project or load an existing one to start making music')).toBeInTheDocument();
-    expect(screen.getByTestId('transport-controls')).toBeInTheDocument();
     expect(screen.getByTestId('project-manager')).toBeInTheDocument();
     
     // Should not show DAW interface components
@@ -84,22 +96,13 @@ describe('DAWInterface', () => {
   });
 
   it('shows full DAW interface when project is loaded', () => {
-    const mockProject = {
-      id: 'test-project',
-      name: 'Test Project',
-      key: { tonic: 'C', mode: 'major' },
-      tempo: 120,
-      timeSignature: { numerator: 4, denominator: 4 },
-      tracks: [],
-      createdAt: new Date(),
-      modifiedAt: new Date()
-    };
-
-    mockUseDAWStore.mockReturnValue({
-      currentProject: mockProject,
-      aiAssistantVisible: false,
-      toggleAIAssistant: jest.fn()
-    });
+    // Mock the individual selector calls in the component
+    mockUseDAWStore
+      .mockReturnValueOnce(mockProject) // currentProject
+      .mockReturnValueOnce(null) // selectedTrackId
+      .mockReturnValueOnce(false) // aiAssistantVisible
+      .mockReturnValueOnce(jest.fn()) // toggleAIAssistant
+      .mockReturnValueOnce(jest.fn()); // toggleTheoryHelper
 
     render(<DAWInterface />);
 
@@ -107,7 +110,6 @@ describe('DAWInterface', () => {
     expect(screen.getByText(/Test Project.*C major.*120 BPM/)).toBeInTheDocument();
     
     // Should show all DAW components
-    expect(screen.getByTestId('transport-controls')).toBeInTheDocument();
     expect(screen.getByTestId('project-manager')).toBeInTheDocument();
     expect(screen.getByTestId('track-list')).toBeInTheDocument();
     expect(screen.getByTestId('timeline')).toBeInTheDocument();
@@ -117,34 +119,115 @@ describe('DAWInterface', () => {
     expect(screen.queryByText('Welcome to B. Boyd\'s Bangin\' Beat Button')).not.toBeInTheDocument();
   });
 
-  it('always shows transport controls regardless of project state', () => {
-    // Test with no project
-    mockUseDAWStore.mockReturnValue({
-      currentProject: null,
-      aiAssistantVisible: false,
-      toggleAIAssistant: jest.fn()
-    });
-    const { rerender } = render(<DAWInterface />);
-    expect(screen.getByTestId('transport-controls')).toBeInTheDocument();
+  it('shows timeline only when project is loaded (not on welcome screen)', () => {
+    // Test with no project - timeline should not be visible
+    mockUseDAWStore
+      .mockReturnValueOnce(null) // currentProject
+      .mockReturnValueOnce(null) // selectedTrackId
+      .mockReturnValueOnce(false) // aiAssistantVisible
+      .mockReturnValueOnce(jest.fn()) // toggleAIAssistant
+      .mockReturnValueOnce(jest.fn()); // toggleTheoryHelper
 
-    // Test with project
-    const mockProject = {
-      id: 'test-project',
-      name: 'Test Project',
-      key: { tonic: 'C', mode: 'major' },
-      tempo: 120,
-      timeSignature: { numerator: 4, denominator: 4 },
-      tracks: [],
-      createdAt: new Date(),
-      modifiedAt: new Date()
+    const { rerender } = render(<DAWInterface />);
+    expect(screen.queryByTestId('timeline')).not.toBeInTheDocument();
+
+    // Test with project - timeline should be visible
+    // Clear the mock and set new return values
+    mockUseDAWStore.mockClear();
+    mockUseDAWStore
+      .mockReturnValueOnce(mockProject) // currentProject
+      .mockReturnValueOnce(null) // selectedTrackId
+      .mockReturnValueOnce(false) // aiAssistantVisible
+      .mockReturnValueOnce(jest.fn()) // toggleAIAssistant
+      .mockReturnValueOnce(jest.fn()); // toggleTheoryHelper
+
+    rerender(<DAWInterface />);
+    expect(screen.getByTestId('timeline')).toBeInTheDocument();
+  });
+
+  it('positions timeline above piano roll in correct layout hierarchy', () => {
+    // Mock the individual selector calls in the component
+    mockUseDAWStore
+      .mockReturnValueOnce(mockProject) // currentProject
+      .mockReturnValueOnce(null) // selectedTrackId
+      .mockReturnValueOnce(false) // aiAssistantVisible
+      .mockReturnValueOnce(jest.fn()) // toggleAIAssistant
+      .mockReturnValueOnce(jest.fn()); // toggleTheoryHelper
+
+    const { container } = render(<DAWInterface />);
+
+    const timeline = screen.getByTestId('timeline');
+    const pianoRoll = screen.getByTestId('piano-roll');
+    
+    // Both should be present
+    expect(timeline).toBeInTheDocument();
+    expect(pianoRoll).toBeInTheDocument();
+    
+    // Timeline should come before piano roll in DOM order (positioned above)
+    // Get all elements and check their relative positions in the DOM
+    const allElements = Array.from(container.querySelectorAll('[data-testid]'));
+    const timelineIndex = allElements.indexOf(timeline);
+    const pianoRollIndex = allElements.indexOf(pianoRoll);
+    
+    expect(timelineIndex).toBeLessThan(pianoRollIndex);
+  });
+
+  it('shows selected track information when track is selected', () => {
+    const mockProjectWithTrack = {
+      ...mockProject,
+      tracks: [
+        {
+          id: 'track-1',
+          name: 'Lead Synth',
+          instrument: { type: 'piano' },
+          notes: [],
+          volume: 0.8,
+          pan: 0,
+          muted: false,
+          soloed: false
+        }
+      ]
     };
 
-    mockUseDAWStore.mockReturnValue({
-      currentProject: mockProject,
-      aiAssistantVisible: false,
-      toggleAIAssistant: jest.fn()
-    });
-    rerender(<DAWInterface />);
-    expect(screen.getByTestId('transport-controls')).toBeInTheDocument();
+    // Mock the individual selector calls with selected track
+    mockUseDAWStore
+      .mockReturnValueOnce(mockProjectWithTrack) // currentProject
+      .mockReturnValueOnce('track-1') // selectedTrackId
+      .mockReturnValueOnce(false) // aiAssistantVisible
+      .mockReturnValueOnce(jest.fn()) // toggleAIAssistant
+      .mockReturnValueOnce(jest.fn()); // toggleTheoryHelper
+
+    render(<DAWInterface />);
+
+    // Should show selected track info
+    expect(screen.getByText(/🎹 Editing: Lead Synth \(piano\)/)).toBeInTheDocument();
+  });
+
+  it('shows AI assistant when toggled visible', () => {
+    // Mock the individual selector calls with AI assistant visible
+    mockUseDAWStore
+      .mockReturnValueOnce(mockProject) // currentProject
+      .mockReturnValueOnce(null) // selectedTrackId
+      .mockReturnValueOnce(true) // aiAssistantVisible
+      .mockReturnValueOnce(jest.fn()) // toggleAIAssistant
+      .mockReturnValueOnce(jest.fn()); // toggleTheoryHelper
+
+    render(<DAWInterface />);
+
+    expect(screen.getByTestId('ai-assistant')).toBeInTheDocument();
+  });
+
+  it('hides AI assistant when toggled invisible', () => {
+    // Mock the individual selector calls with AI assistant hidden
+    mockUseDAWStore
+      .mockReturnValueOnce(mockProject) // currentProject
+      .mockReturnValueOnce(null) // selectedTrackId
+      .mockReturnValueOnce(false) // aiAssistantVisible
+      .mockReturnValueOnce(jest.fn()) // toggleAIAssistant
+      .mockReturnValueOnce(jest.fn()); // toggleTheoryHelper
+
+    render(<DAWInterface />);
+
+    expect(screen.queryByTestId('ai-assistant')).not.toBeInTheDocument();
   });
 });
