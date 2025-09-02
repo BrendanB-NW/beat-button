@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog } from '@headlessui/react';
 import { Plus, FolderOpen, Save, Download, Upload, X } from 'lucide-react';
-import { useDAWStore } from '@/stores/dawStore';
-import { projectManager } from '@/services/projectManager';
-import { ProjectSummary } from '@/types/project';
+import { useDAWStore } from '../../stores/dawStore';
+import { projectManager } from '../../services/projectManager';
+import { ProjectSummary } from '../../types/project';
 import { Tooltip } from '../common/Tooltip';
 
 export function ProjectManager() {
@@ -20,6 +20,7 @@ export function ProjectManager() {
   const [newProjectName, setNewProjectName] = useState('');
   const [newProjectKey, setNewProjectKey] = useState({ tonic: 'C', mode: 'major' });
   const [newProjectTempo, setNewProjectTempo] = useState(120);
+  const [projectNameError, setProjectNameError] = useState('');
 
   useEffect(() => {
     loadProjectList();
@@ -34,8 +35,22 @@ export function ProjectManager() {
     }
   };
 
+  const handleProjectNameChange = (name: string) => {
+    setNewProjectName(name);
+    // Clear error when user starts typing
+    if (projectNameError && name.trim()) {
+      setProjectNameError('');
+    }
+  };
+
   const handleNewProject = async () => {
-    if (!newProjectName.trim()) return;
+    if (!newProjectName.trim()) {
+      setProjectNameError('Project name is required');
+      return;
+    }
+    
+    // Clear any previous error
+    setProjectNameError('');
     
     try {
       await createNewProject(newProjectName, newProjectKey, newProjectTempo);
@@ -43,6 +58,7 @@ export function ProjectManager() {
       setNewProjectName('');
       setNewProjectTempo(120);
       setNewProjectKey({ tonic: 'C', mode: 'major' });
+      setProjectNameError(''); // Clear error on successful creation
     } catch (error) {
       console.error('Failed to create project:', error);
     }
@@ -152,7 +168,10 @@ export function ProjectManager() {
     <>
       <div className="flex items-center space-x-2">
         <button
-          onClick={() => setShowNewProjectDialog(true)}
+          onClick={() => {
+            setShowNewProjectDialog(true);
+            setProjectNameError(''); // Clear any previous error when opening dialog
+          }}
           className="transport-button"
           title="New Project"
         >
@@ -226,10 +245,17 @@ export function ProjectManager() {
                   id="project-name"
                   type="text"
                   value={newProjectName}
-                  onChange={(e) => setNewProjectName(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  onChange={(e) => handleProjectNameChange(e.target.value)}
+                  className={`w-full px-3 py-2 bg-gray-700 border rounded-md focus:outline-none focus:ring-2 ${
+                    projectNameError 
+                      ? 'border-red-500 focus:ring-red-500' 
+                      : 'border-gray-600 focus:ring-primary-500'
+                  }`}
                   placeholder="My Awesome Beat"
                 />
+                {projectNameError && (
+                  <p className="text-red-400 text-sm mt-1">{projectNameError}</p>
+                )}
               </div>
               
               <div className="grid grid-cols-2 gap-4">
@@ -312,7 +338,6 @@ export function ProjectManager() {
               <button
                 onClick={handleNewProject}
                 className="px-4 py-2 bg-primary-600 hover:bg-primary-500 rounded-md font-medium"
-                disabled={!newProjectName.trim()}
               >
                 Create
               </button>
