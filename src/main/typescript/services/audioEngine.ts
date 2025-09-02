@@ -104,18 +104,24 @@ export class WebAudioEngine implements AudioEngine {
     this.scheduledNotes.clear();
   }
 
-  async createSynthesizer(type: SynthType): Promise<Synthesizer> {
+  async createSynthesizer(type: SynthType, trackId?: string): Promise<Synthesizer> {
     if (!this.isInitialized) {
       await this.start();
     }
 
-    const id = `synth_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const id = trackId || `synth_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    
+    // If synthesizer already exists for this track, return it
+    if (trackId && this.synthesizers.has(trackId)) {
+      return this.synthesizers.get(trackId)!;
+    }
+    
     const synthesizer = new ToneSynthesizer(id, type);
     this.synthesizers.set(id, synthesizer);
     return synthesizer;
   }
 
-  playNote(note: Note, duration: number): void {
+  playNote(note: Note, duration: number, startTime?: number): void {
     const synthesizer = this.synthesizers.get(note.trackId);
     if (!synthesizer) {
       console.warn(`No synthesizer found for track ${note.trackId}`);
@@ -125,20 +131,33 @@ export class WebAudioEngine implements AudioEngine {
     const scheduledNote: ScheduledNote = {
       noteId: note.id,
       note,
-      scheduledTime: Tone.now(),
+      scheduledTime: startTime ? Tone.now() + startTime : Tone.now(),
       synthesizer
     };
 
     this.scheduledNotes.set(note.id, scheduledNote);
 
-    // Play the note
-    synthesizer.play(note);
+    if (startTime && startTime > 0) {
+      // Schedule note to play at the specified time
+      this.transport.scheduleOnce(() => {
+        synthesizer.play(note);
+      }, `+${startTime}`);
 
-    // Schedule note off
-    this.transport.scheduleOnce(() => {
-      synthesizer.stop(note.id);
-      this.scheduledNotes.delete(note.id);
-    }, `+${duration}`);
+      // Schedule note off
+      this.transport.scheduleOnce(() => {
+        synthesizer.stop(note.id);
+        this.scheduledNotes.delete(note.id);
+      }, `+${startTime + duration}`);
+    } else {
+      // Play immediately
+      synthesizer.play(note);
+
+      // Schedule note off
+      this.transport.scheduleOnce(() => {
+        synthesizer.stop(note.id);
+        this.scheduledNotes.delete(note.id);
+      }, `+${duration}`);
+    }
   }
 
   stopNote(noteId: string): void {

@@ -446,12 +446,18 @@ export const useDAWStore = create<DAWStore>()(
         if (currentProject && !get().isPlaying) {
           await audioEngine.start();
           
-          // Schedule all notes for playback
+          // Create synthesizers for tracks and schedule notes for playback
           for (const track of currentProject.tracks) {
-            if (!track.muted) {
+            if (!track.muted && track.notes.length > 0) {
+              // Create synthesizer for track if it doesn't exist
+              await audioEngine.createSynthesizer(track.instrument.type, track.id);
+              
+              // For now, play all notes immediately for testing
               for (const note of track.notes) {
                 if (note.startTime >= timeline.playheadPosition) {
-                  audioEngine.playNote(note, note.duration);
+                  // Convert beat duration to seconds based on tempo
+                  const durationInSeconds = (note.duration * 60) / currentProject.tempo;
+                  audioEngine.playNote(note, durationInSeconds);
                 }
               }
             }
