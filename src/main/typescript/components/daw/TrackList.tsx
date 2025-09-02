@@ -40,7 +40,7 @@ export function TrackList() {
       <div className="p-2">
         <button
           onClick={handleAddTrack}
-          className="w-full flex items-center justify-center space-x-2 p-2 bg-primary-600 hover:bg-primary-500 rounded-md text-sm font-medium"
+          className="w-full flex items-center justify-center space-x-2 p-2 bg-earth-purple-600 hover:bg-earth-purple-500 rounded-md text-sm font-medium text-earth-bg-50"
         >
           <Plus size={16} />
           <span>Add Track</span>
@@ -55,8 +55,8 @@ export function TrackList() {
               key={track.id} 
               className={`track-header cursor-pointer transition-colors ${
                 isSelected 
-                  ? 'bg-blue-900 bg-opacity-50 border-l-4 border-blue-500' 
-                  : 'hover:bg-gray-700'
+                  ? 'bg-earth-purple-900 bg-opacity-50 border-l-4 border-earth-purple-500' 
+                  : 'hover:bg-earth-bg-700'
               }`}
               onClick={() => selectTrack(track.id)}
             >
@@ -65,7 +65,7 @@ export function TrackList() {
                   type="text"
                   value={track.name}
                   onChange={(e) => updateTrackName(track.id, e.target.value)}
-                  className="bg-transparent text-sm font-medium focus:outline-none focus:bg-gray-700 px-1 rounded flex-1"
+                  className="bg-transparent text-sm font-medium focus:outline-none focus:bg-earth-bg-700 px-1 rounded flex-1 text-earth-bg-100"
                   onClick={(e) => e.stopPropagation()}
                 />
                 <button
@@ -73,7 +73,7 @@ export function TrackList() {
                     e.stopPropagation();
                     removeTrack(track.id);
                   }}
-                  className="text-gray-400 hover:text-red-400 text-xs ml-2"
+                  className="text-earth-bg-400 hover:text-red-400 text-xs ml-2"
                 >
                   ×
                 </button>
@@ -83,7 +83,7 @@ export function TrackList() {
                 <select
                   value={track.instrument.type}
                   onChange={(e) => updateTrackInstrument(track.id, e.target.value as SynthType)}
-                  className="w-full text-xs bg-gray-700 border border-gray-600 rounded px-2 py-1"
+                  className="w-full text-xs bg-earth-bg-700 border border-earth-bg-600 rounded px-2 py-1 text-earth-bg-100 focus:outline-none focus:ring-2 focus:ring-earth-purple-500"
                   onClick={(e) => e.stopPropagation()}
                 >
                   {synthTypes.map(({ value, label }) => (
@@ -93,7 +93,7 @@ export function TrackList() {
               </div>
 
               {isSelected && (
-                <div className="text-xs text-blue-300 mb-2 flex items-center gap-1">
+                <div className="text-xs text-earth-purple-300 mb-2 flex items-center gap-1">
                   🎹 <span>Currently editing this track</span>
                 </div>
               )}
@@ -124,7 +124,7 @@ export function TrackList() {
 
               <div className="space-y-1">
                 <div className="flex items-center space-x-2">
-                  <label className="text-xs text-gray-400 w-8">Vol</label>
+                  <label className="text-xs text-earth-bg-300 w-8">Vol</label>
                   <input
                     type="range"
                     min="0"
@@ -135,13 +135,13 @@ export function TrackList() {
                     className="volume-fader flex-1"
                     onClick={(e) => e.stopPropagation()}
                   />
-                  <span className="text-xs text-gray-400 w-8">
+                  <span className="text-xs text-earth-bg-300 w-8">
                     {Math.round(track.volume * 100)}
                   </span>
                 </div>
 
                 <div className="flex items-center space-x-2">
-                  <label className="text-xs text-gray-400 w-8">Pan</label>
+                  <label className="text-xs text-earth-bg-300 w-8">Pan</label>
                   <input
                     type="range"
                     min="-1"
@@ -152,7 +152,7 @@ export function TrackList() {
                     className="volume-fader flex-1"
                     onClick={(e) => e.stopPropagation()}
                   />
-                  <span className="text-xs text-gray-400 w-8">
+                  <span className="text-xs text-earth-bg-300 w-8">
                     {track.pan > 0 ? 'R' : track.pan < 0 ? 'L' : 'C'}
                   </span>
                 </div>
