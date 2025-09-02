@@ -71,4 +71,22 @@ describe('Tooltip Component', () => {
     
     expect(screen.queryByRole('button', { name: 'Help' })).not.toBeInTheDocument();
   });
+
+  it('updates content dynamically when content prop changes', async () => {
+    const { rerender } = render(<Tooltip content="Initial content" />);
+    
+    const helpButton = screen.getByRole('button', { name: 'Help' });
+    fireEvent.mouseEnter(helpButton);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Initial content')).toBeInTheDocument();
+    });
+    
+    rerender(<Tooltip content="Updated content" />);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Updated content')).toBeInTheDocument();
+      expect(screen.queryByText('Initial content')).not.toBeInTheDocument();
+    });
+  });
 });

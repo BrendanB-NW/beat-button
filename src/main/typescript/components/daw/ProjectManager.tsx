@@ -128,6 +128,26 @@ export function ProjectManager() {
     'locrian': 'Locrian - Unstable and mysterious. Rarely used, creates tension and unease.'
   };
 
+  const getTempoDescription = (bpm: number): string => {
+    if (bpm >= 60 && bpm <= 70) {
+      return `${bpm} BPM - Largo/Adagio - Very slow and contemplative. Perfect for ballads, ambient music, and emotional pieces.`;
+    } else if (bpm >= 71 && bpm <= 90) {
+      return `${bpm} BPM - Andante - Slow and steady. Great for folk songs, classical pieces, and relaxed compositions.`;
+    } else if (bpm >= 91 && bpm <= 110) {
+      return `${bpm} BPM - Moderato - Moderate pace. Ideal for pop ballads, country music, and easy listening.`;
+    } else if (bpm >= 111 && bpm <= 130) {
+      return `${bpm} BPM - Allegretto - Moderately fast. Perfect for most pop, rock, and contemporary music.`;
+    } else if (bpm >= 131 && bpm <= 150) {
+      return `${bpm} BPM - Allegro - Fast and energetic. Great for upbeat pop, rock, and dance music.`;
+    } else if (bpm >= 151 && bpm <= 180) {
+      return `${bpm} BPM - Vivace - Very fast and lively. Ideal for electronic dance music, punk, and energetic rock.`;
+    } else if (bpm >= 181 && bpm <= 200) {
+      return `${bpm} BPM - Presto - Extremely fast. Perfect for speed metal, drum & bass, and high-energy electronic music.`;
+    } else {
+      return `${bpm} BPM - Custom tempo for your unique musical vision.`;
+    }
+  };
+
   return (
     <>
       <div className="flex items-center space-x-2">
@@ -261,9 +281,15 @@ export function ProjectManager() {
               </div>
               
               <div>
-                <label htmlFor="project-tempo" className="block text-sm font-medium mb-1">
-                  Tempo (BPM)
-                </label>
+                <div className="flex items-center gap-2 mb-1">
+                  <label htmlFor="project-tempo" className="block text-sm font-medium">
+                    Tempo (BPM)
+                  </label>
+                  <Tooltip 
+                    content={getTempoDescription(newProjectTempo)}
+                    position="top"
+                  />
+                </div>
                 <input
                   id="project-tempo"
                   type="number"
