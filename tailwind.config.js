@@ -46,17 +46,17 @@ export default {
           800: '#334637',
           900: '#2c3a30',
         },
-        // Main background - warm neutral that ties everything together
+        // Main background - warm neutral that ties everything together (more muted)
         'earth-bg': {
-          50: '#f9f8f6',
-          100: '#f1efeb',
-          200: '#e6e2db',
-          300: '#d5cfc4',
-          400: '#bfb6a7',
-          500: '#a69c8a',   // Light background
-          600: '#8b7f6c',
+          50: '#f7f6f4',
+          100: '#efede8',
+          200: '#e2ded7',
+          300: '#d0cac1',
+          400: '#b8afa0',
+          500: '#9d9286',   // Light background (more muted)
+          600: '#847a6a',
           700: '#6b6056',   // Medium background
-          800: '#4a443c',   // Dark background
+          800: '#4a443c',   // Dark background  
           900: '#342f29',   // Darkest background
         },
         // Legacy colors for compatibility
