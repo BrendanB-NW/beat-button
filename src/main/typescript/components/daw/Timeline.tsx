@@ -73,17 +73,17 @@ export function Timeline() {
   const playheadX = timeline.playheadPosition * beatWidth;
 
   return (
-    <div className="h-full bg-gray-800 relative border-b border-gray-700">
+    <div className="h-full bg-earth-bg-800 relative border-b border-earth-bg-700">
       {/* Fixed Transport Controls - Pinned to right side of viewport */}
-      <div className="fixed top-20 right-4 z-50 bg-gray-900 border border-gray-600 rounded-lg shadow-lg p-3">
+      <div className="fixed top-20 right-4 z-50 bg-earth-bg-900 border border-earth-bg-700 rounded-lg shadow-lg p-3">
         <div className="flex flex-col space-y-2">
           <div className="flex items-center space-x-2">
             <TransportControls />
           </div>
-          <div className="flex items-center justify-center space-x-2 pt-2 border-t border-gray-600">
+          <div className="flex items-center justify-center space-x-2 pt-2 border-t border-earth-bg-700">
             <button
               onClick={toggleTheoryHelper}
-              className="p-2 rounded bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors"
+              className="p-2 rounded bg-earth-purple-600 text-earth-bg-100 hover:bg-earth-purple-500 transition-colors"
               title="Theory Helper"
             >
               ?
@@ -92,8 +92,8 @@ export function Timeline() {
               onClick={toggleAIAssistant}
               className={`p-2 rounded transition-colors ${
                 aiAssistantVisible 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  ? 'bg-earth-green-600 text-earth-bg-50' 
+                  : 'bg-earth-ochre-600 text-earth-bg-100 hover:bg-earth-ochre-500'
               }`}
               title="AI Assistant"
             >
@@ -104,7 +104,7 @@ export function Timeline() {
       </div>
       
       {/* Timeline ruler section - Full height */}
-      <div className="h-full bg-gray-800 overflow-x-auto">
+      <div className="h-full bg-earth-bg-800 overflow-x-auto">
         <div 
           className="h-full relative cursor-pointer" 
           style={{ width: totalBeats * beatWidth }}
@@ -112,7 +112,7 @@ export function Timeline() {
         >
           {/* Measure markers */}
           {Array.from({ length: Math.ceil(totalBeats / beatsPerMeasure) }, (_, i) => (
-            <div key={i} className="absolute top-2 text-xs text-gray-400" style={{ left: i * beatsPerMeasure * beatWidth + 4 }}>
+            <div key={i} className="absolute top-2 text-xs text-earth-ochre-300" style={{ left: i * beatsPerMeasure * beatWidth + 4 }}>
               {i + 1}
             </div>
           ))}
@@ -121,14 +121,14 @@ export function Timeline() {
           {Array.from({ length: totalBeats }, (_, i) => (
             <div 
               key={i} 
-              className={`absolute top-6 bottom-0 pointer-events-none ${i % beatsPerMeasure === 0 ? 'border-l-2 border-gray-500' : 'border-l border-gray-600'}`}
+              className={`absolute top-6 bottom-0 pointer-events-none ${i % beatsPerMeasure === 0 ? 'border-l-2 border-earth-ochre-400' : 'border-l border-earth-bg-600'}`}
               style={{ left: i * beatWidth }}
             />
           ))}
           
           {/* Playhead */}
           <div
-            className="absolute top-0 bottom-0 border-l-2 border-red-500 pointer-events-none z-10"
+            className="absolute top-0 bottom-0 border-l-2 border-earth-green-400 pointer-events-none z-10"
             style={{ left: playheadX }}
           />
         </div>

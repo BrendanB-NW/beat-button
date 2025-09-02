@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom scrollbar styles */
+/* Custom scrollbar styles with earthy theme */
 .scrollbar-thin {
   scrollbar-width: thin;
-  scrollbar-color: #4B5563 #1F2937;
+  scrollbar-color: #6b6056 #4a443c;
 }
 
 .scrollbar-thin::-webkit-scrollbar {
@@ -14,68 +14,68 @@
 }
 
 .scrollbar-thin::-webkit-scrollbar-track {
-  background: #1F2937;
+  background: #4a443c;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: #4B5563;
+  background: #6b6056;
   border-radius: 3px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: #6B7280;
+  background: #8b7f6c;
 }
 
-/* Piano key styles */
+/* Piano key styles with earthy theme */
 .piano-white-key {
-  @apply bg-white border border-gray-300 hover:bg-gray-50 active:bg-gray-100;
+  @apply bg-earth-bg-50 border border-earth-bg-300 hover:bg-earth-bg-100 active:bg-earth-bg-200;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .piano-black-key {
-  @apply bg-gray-800 hover:bg-gray-700 active:bg-gray-600;
+  @apply bg-earth-bg-800 hover:bg-earth-bg-700 active:bg-earth-bg-600;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-/* Note block styles */
+/* Note block styles with earthy theme */
 .note-block {
-  @apply bg-blue-500 border border-blue-600 rounded cursor-pointer;
+  @apply bg-earth-purple-500 border border-earth-purple-600 rounded cursor-pointer;
   transition: all 0.1s ease;
 }
 
 .note-block:hover {
-  @apply bg-blue-400 border-blue-500;
+  @apply bg-earth-purple-400 border-earth-purple-500;
 }
 
 .note-block.selected {
-  @apply bg-blue-600 border-blue-700 ring-2 ring-blue-300;
+  @apply bg-earth-purple-600 border-earth-purple-700 ring-2 ring-earth-purple-300;
 }
 
-/* Grid lines */
+/* Grid lines with earthy theme */
 .grid-line-measure {
-  @apply border-r border-gray-600;
+  @apply border-r border-earth-ochre-400;
 }
 
 .grid-line-beat {
-  @apply border-r border-gray-700;
+  @apply border-r border-earth-bg-600;
 }
 
 .grid-line-subdivision {
-  @apply border-r border-gray-800;
+  @apply border-r border-earth-bg-700;
 }
 
-/* Transport controls */
+/* Transport controls with earthy theme */
 .transport-button {
-  @apply px-4 py-2 rounded bg-gray-700 hover:bg-gray-600 active:bg-gray-800 text-white font-medium transition-colors;
+  @apply px-4 py-2 rounded bg-earth-bg-700 hover:bg-earth-bg-600 active:bg-earth-bg-800 text-earth-bg-100 font-medium transition-colors;
 }
 
 .transport-button.active {
-  @apply bg-blue-600 hover:bg-blue-500 active:bg-blue-700;
+  @apply bg-earth-green-600 hover:bg-earth-green-500 active:bg-earth-green-700 text-earth-bg-50;
 }
 
-/* Track controls */
+/* Track controls with earthy theme */
 .track-header {
-  @apply bg-gray-800 border-b border-gray-700 p-3 min-w-0;
+  @apply bg-earth-bg-800 border-b border-earth-bg-700 p-3 min-w-0;
 }
 
 .track-control-button {
@@ -83,41 +83,41 @@
 }
 
 .mute-button {
-  @apply bg-yellow-600 hover:bg-yellow-500 text-white;
+  @apply bg-earth-ochre-600 hover:bg-earth-ochre-500 text-earth-bg-50;
 }
 
 .mute-button.active {
-  @apply bg-yellow-500 hover:bg-yellow-400;
+  @apply bg-earth-ochre-500 hover:bg-earth-ochre-400;
 }
 
 .solo-button {
-  @apply bg-red-600 hover:bg-red-500 text-white;
+  @apply bg-earth-purple-600 hover:bg-earth-purple-500 text-earth-bg-50;
 }
 
 .solo-button.active {
-  @apply bg-red-500 hover:bg-red-400;
+  @apply bg-earth-purple-500 hover:bg-earth-purple-400;
 }
 
-/* Faders and knobs */
+/* Faders and knobs with earthy theme */
 .volume-fader {
-  @apply w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer;
+  @apply w-full h-2 bg-earth-bg-700 rounded-lg appearance-none cursor-pointer;
 }
 
 .volume-fader::-webkit-slider-thumb {
-  @apply appearance-none w-4 h-4 bg-blue-500 rounded-full cursor-pointer;
+  @apply appearance-none w-4 h-4 bg-earth-green-500 rounded-full cursor-pointer;
 }
 
 .volume-fader::-moz-range-thumb {
-  @apply w-4 h-4 bg-blue-500 rounded-full cursor-pointer border-none;
+  @apply w-4 h-4 bg-earth-green-500 rounded-full cursor-pointer border-none;
 }
 
-/* Theory helper styles */
+/* Theory helper styles with earthy theme */
 .theory-tooltip {
-  @apply absolute z-50 bg-gray-900 border border-gray-600 rounded-lg p-3 shadow-lg max-w-xs;
+  @apply absolute z-50 bg-earth-bg-900 border border-earth-bg-600 rounded-lg p-3 shadow-lg max-w-xs;
 }
 
 .theory-highlight {
-  @apply bg-secondary-600 bg-opacity-30 border border-secondary-500 rounded;
+  @apply bg-earth-green-600 bg-opacity-30 border border-earth-green-500 rounded;
 }
 
 /* Responsive breakpoints */
@@ -145,7 +145,7 @@
   }
 }
 
-/* Focus styles for accessibility */
+/* Focus styles for accessibility with earthy theme */
 .focus-visible:focus {
-  @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-900;
+  @apply outline-none ring-2 ring-earth-purple-500 ring-offset-2 ring-offset-earth-bg-900;
 }

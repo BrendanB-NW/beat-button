@@ -10,8 +10,8 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <div className="h-screen bg-gray-900 text-white flex flex-col overflow-hidden">
-        <header className="bg-gray-800 border-b border-gray-700 p-4">
+      <div className="h-screen bg-earth-bg-900 text-earth-bg-50 flex flex-col overflow-hidden">
+        <header className="bg-earth-bg-800 border-b border-earth-bg-700 p-4">
           <h1 className="text-2xl font-bold text-primary-500">
             B. Boyd's Bangin' Beat Button
           </h1>

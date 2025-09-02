@@ -114,7 +114,7 @@ describe('Timeline', () => {
     const fixedPanel = screen.getByTestId('transport-controls').closest('.fixed');
     expect(fixedPanel).toBeInTheDocument();
     expect(fixedPanel).toHaveClass('fixed', 'top-20', 'right-4', 'z-50');
-    expect(fixedPanel).toHaveClass('bg-gray-900', 'border', 'border-gray-600', 'rounded-lg', 'shadow-lg', 'p-3');
+    expect(fixedPanel).toHaveClass('bg-earth-bg-900', 'border', 'border-earth-bg-700', 'rounded-lg', 'shadow-lg', 'p-3');
   });
 
   it('renders measure markers correctly based on time signature', () => {
@@ -218,7 +218,7 @@ describe('Timeline', () => {
     render(<Timeline />);
 
     const aiButton = screen.getByTitle('AI Assistant');
-    expect(aiButton).toHaveClass('bg-blue-600', 'text-white');
+    expect(aiButton).toHaveClass('bg-earth-green-600', 'text-earth-bg-50');
   });
 
   it('applies inactive styling to AI assistant button when aiAssistantVisible is false', () => {
@@ -234,7 +234,7 @@ describe('Timeline', () => {
     render(<Timeline />);
 
     const aiButton = screen.getByTitle('AI Assistant');
-    expect(aiButton).toHaveClass('bg-gray-700', 'text-gray-300');
+    expect(aiButton).toHaveClass('bg-earth-ochre-600', 'text-earth-bg-100');
   });
 
   it('positions playhead correctly based on timeline position', () => {
@@ -255,7 +255,7 @@ describe('Timeline', () => {
     render(<Timeline />);
 
     // Playhead should be positioned at 8 * 30px = 240px from the left
-    const playhead = document.querySelector('.border-red-500');
+    const playhead = document.querySelector('.border-earth-green-400');
     expect(playhead).toBeInTheDocument();
     expect(playhead).toHaveStyle('left: 240px');
   });

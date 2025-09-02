@@ -64,7 +64,7 @@ export function TransportControls() {
 
       {/* Master volume */}
       <div className="flex items-center space-x-2">
-        <label htmlFor="master-volume" className="text-xs text-gray-400">
+        <label htmlFor="master-volume" className="text-xs text-earth-bg-300">
           Master
         </label>
         <input
@@ -77,7 +77,7 @@ export function TransportControls() {
           onChange={(e) => setMasterVolume(parseFloat(e.target.value))}
           className="volume-fader w-20"
         />
-        <span className="text-xs text-gray-400 w-8">
+        <span className="text-xs text-earth-bg-300 w-8">
           {Math.round(masterVolume * 100)}
         </span>
       </div>
