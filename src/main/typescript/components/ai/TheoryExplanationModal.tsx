@@ -63,7 +63,7 @@ export function TheoryExplanationModal({
                   {explanation.concepts.map((concept, index) => (
                     <span
                       key={index}
-                      className="bg-blue-900 bg-opacity-50 text-blue-200 px-3 py-1 rounded-full text-sm"
+                      className="bg-earth-purple-900 bg-opacity-50 text-earth-purple-200 px-3 py-1 rounded-full text-sm"
                     >
                       {concept}
                     </span>
@@ -165,12 +165,12 @@ export function TheoryExplanationModal({
                   onChange={(e) => setFollowUpQuestion(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleAskFollowUp()}
                   placeholder="Ask for more details or a related question..."
-                  className="flex-1 bg-gray-700 text-white px-3 py-2 rounded border border-gray-600 focus:border-blue-500 focus:outline-none text-sm"
+                  className="flex-1 bg-gray-700 text-white px-3 py-2 rounded border border-gray-600 focus:border-earth-purple-500 focus:outline-none text-sm"
                 />
                 <button
                   onClick={handleAskFollowUp}
                   disabled={!followUpQuestion.trim()}
-                  className="bg-blue-600 hover:bg-blue-500 disabled:bg-gray-600 text-white px-4 py-2 rounded transition-colors text-sm"
+                  className="bg-earth-purple-600 hover:bg-earth-purple-500 disabled:bg-gray-600 text-white px-4 py-2 rounded transition-colors text-sm"
                 >
                   Ask
                 </button>

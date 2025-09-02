@@ -99,7 +99,7 @@ export function AIAssistantPanel({ visible, onClose }: AIAssistantPanelProps) {
             <h2 className="text-lg font-semibold text-white flex items-center gap-2">
               🤖 AI Assistant
               {aiGenerating && (
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-earth-green-500 rounded-full animate-pulse"></div>
               )}
             </h2>
             <button
@@ -124,7 +124,7 @@ export function AIAssistantPanel({ visible, onClose }: AIAssistantPanelProps) {
                 onClick={() => setMode(tab.id as AIMode)}
                 className={`px-3 py-1 rounded text-sm transition-colors ${
                   mode === tab.id
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-earth-purple-600 text-white'
                     : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                 }`}
                 title={tab.title}
@@ -171,9 +171,9 @@ export function AIAssistantPanel({ visible, onClose }: AIAssistantPanelProps) {
                 ) : (
                   aiHistory.map((interaction) => (
                     <div key={interaction.id} className="space-y-2">
-                      <div className="bg-blue-900 bg-opacity-50 p-3 rounded-lg">
+                      <div className="bg-earth-purple-900 bg-opacity-50 p-3 rounded-lg">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-blue-300">You</span>
+                          <span className="text-earth-purple-300">You</span>
                           <span className="text-xs text-gray-400">
                             {formatTimestamp(interaction.timestamp)}
                           </span>
@@ -237,13 +237,13 @@ export function AIAssistantPanel({ visible, onClose }: AIAssistantPanelProps) {
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleAskQuestion()}
                     placeholder="Ask me about music theory..."
-                    className="flex-1 bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-blue-500 focus:outline-none text-sm"
+                    className="flex-1 bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-earth-purple-500 focus:outline-none text-sm"
                     disabled={aiGenerating}
                   />
                   <button
                     onClick={() => handleAskQuestion()}
                     disabled={aiGenerating || !inputValue.trim()}
-                    className="bg-blue-600 hover:bg-blue-500 disabled:bg-gray-600 text-white px-4 py-2 rounded transition-colors text-sm"
+                    className="bg-earth-purple-600 hover:bg-earth-purple-500 disabled:bg-gray-600 text-white px-4 py-2 rounded transition-colors text-sm"
                   >
                     {aiGenerating ? '...' : 'Ask'}
                   </button>
@@ -288,13 +288,13 @@ export function AIAssistantPanel({ visible, onClose }: AIAssistantPanelProps) {
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleAskQuestion()}
                   placeholder="Ask a custom theory question..."
-                  className="w-full bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-blue-500 focus:outline-none text-sm mb-2"
+                  className="w-full bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-earth-purple-500 focus:outline-none text-sm mb-2"
                   disabled={aiGenerating}
                 />
                 <button
                   onClick={() => handleAskQuestion()}
                   disabled={aiGenerating || !inputValue.trim()}
-                  className="w-full bg-blue-600 hover:bg-blue-500 disabled:bg-gray-600 text-white py-2 rounded transition-colors text-sm"
+                  className="w-full bg-earth-purple-600 hover:bg-earth-purple-500 disabled:bg-gray-600 text-white py-2 rounded transition-colors text-sm"
                 >
                   {aiGenerating ? 'Thinking...' : 'Ask Question'}
                 </button>
@@ -320,7 +320,7 @@ export function AIAssistantPanel({ visible, onClose }: AIAssistantPanelProps) {
                         value={apiKey}
                         onChange={(e) => setApiKeyInput(e.target.value)}
                         placeholder="Enter your OpenAI API key"
-                        className="flex-1 bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-blue-500 focus:outline-none text-sm"
+                        className="flex-1 bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-earth-purple-500 focus:outline-none text-sm"
                       />
                       <button
                         onClick={handleSaveApiKey}
@@ -345,7 +345,7 @@ export function AIAssistantPanel({ visible, onClose }: AIAssistantPanelProps) {
                     <select
                       value={aiPreferences.theoryLevel}
                       onChange={(e) => setAIPreferences({ theoryLevel: e.target.value as any })}
-                      className="w-full bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-blue-500 focus:outline-none text-sm"
+                      className="w-full bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-earth-purple-500 focus:outline-none text-sm"
                     >
                       <option value="beginner">Beginner</option>
                       <option value="intermediate">Intermediate</option>
@@ -358,7 +358,7 @@ export function AIAssistantPanel({ visible, onClose }: AIAssistantPanelProps) {
                     <select
                       value={aiPreferences.explanationStyle}
                       onChange={(e) => setAIPreferences({ explanationStyle: e.target.value as any })}
-                      className="w-full bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-blue-500 focus:outline-none text-sm"
+                      className="w-full bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-earth-purple-500 focus:outline-none text-sm"
                     >
                       <option value="conversational">Conversational</option>
                       <option value="technical">Technical</option>

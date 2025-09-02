@@ -2,6 +2,14 @@
 
 A modern, web-based Digital Audio Workstation (DAW) focused on educational melody creation with integrated music theory guidance. Built with React, TypeScript, and Web Audio API.
 
+## 🎨 Design
+
+SoundSage features a cohesive earthy color palette with:
+- **Purple accents** for primary actions and active states
+- **Ochre highlights** for secondary elements and headings
+- **Green indicators** for success states and activity
+- **Warm earth-tone backgrounds** for a comfortable, organic feel
+
 ## ✨ Features
 
 ### 🎵 Core Audio Capabilities

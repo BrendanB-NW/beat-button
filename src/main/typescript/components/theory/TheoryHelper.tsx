@@ -13,13 +13,13 @@ export function TheoryHelper() {
 
   if (!currentProject) {
     return (
-      <div className="w-80 bg-gray-800 border-l border-gray-700 flex flex-col">
-        <div className="p-4 border-b border-gray-700">
+      <div className="w-80 bg-earth-bg-800 border-l border-earth-bg-700 flex flex-col">
+        <div className="p-4 border-b border-earth-bg-700">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-medium">Theory Helper</h3>
             <button
               onClick={toggleTheoryHelper}
-              className="text-gray-400 hover:text-gray-200"
+              className="text-earth-bg-400 hover:text-earth-bg-200"
             >
               <X size={20} />
             </button>
@@ -27,29 +27,29 @@ export function TheoryHelper() {
         </div>
         
         <div className="flex-1 p-4 overflow-y-auto scrollbar-thin">
-          <h4 className="text-sm font-medium mb-2 text-blue-400">Getting Started</h4>
-          <p className="text-gray-400 mb-4">
+          <h4 className="text-sm font-medium mb-2 text-earth-ochre-400">Getting Started</h4>
+          <p className="text-earth-bg-400 mb-4">
             Create a project to unlock personalized theory assistance based on your chosen key and scale.
           </p>
           
           <div className="space-y-4">
-            <div className="p-3 bg-gray-700 rounded-lg">
-              <h5 className="text-sm font-medium mb-2 text-blue-400">Music Theory Basics</h5>
-              <p className="text-xs text-gray-300">
+            <div className="p-3 bg-earth-bg-700 rounded-lg">
+              <h5 className="text-sm font-medium mb-2 text-earth-ochre-400">Music Theory Basics</h5>
+              <p className="text-xs text-earth-bg-300">
                 Music theory helps you understand how melodies and harmonies work together to create beautiful songs.
               </p>
             </div>
             
-            <div className="p-3 bg-gray-700 rounded-lg">
-              <h5 className="text-sm font-medium mb-2 text-blue-400">Choose Your Key</h5>
-              <p className="text-xs text-gray-300">
+            <div className="p-3 bg-earth-bg-700 rounded-lg">
+              <h5 className="text-sm font-medium mb-2 text-earth-ochre-400">Choose Your Key</h5>
+              <p className="text-xs text-earth-bg-300">
                 Start with C Major (no sharps or flats) for the simplest beginning, or A Minor for a more emotional sound.
               </p>
             </div>
             
-            <div className="p-3 bg-gray-700 rounded-lg">
-              <h5 className="text-sm font-medium mb-2 text-blue-400">Build Melodies</h5>
-              <p className="text-xs text-gray-300">
+            <div className="p-3 bg-earth-bg-700 rounded-lg">
+              <h5 className="text-sm font-medium mb-2 text-earth-ochre-400">Build Melodies</h5>
+              <p className="text-xs text-earth-bg-300">
                 Use notes from your chosen scale to create melodies that naturally sound good together.
               </p>
             </div>
@@ -80,8 +80,8 @@ export function TheoryHelper() {
     return (
       <div className="space-y-4">
         <div>
-          <h4 className="text-sm font-medium mb-2 text-primary-400">Current Key: {keyInfo}</h4>
-          <p className="text-xs text-gray-400 mb-4">
+          <h4 className="text-sm font-medium mb-2 text-earth-purple-400">Current Key: {keyInfo}</h4>
+          <p className="text-xs text-earth-bg-400 mb-4">
             Common chords in this key:
           </p>
         </div>
@@ -90,10 +90,10 @@ export function TheoryHelper() {
           {commonChords.map((item, index) => (
             <button
               key={index}
-              className="w-full p-3 bg-gray-700 hover:bg-gray-600 rounded-lg text-left transition-colors"
+              className="w-full p-3 bg-earth-bg-700 hover:bg-earth-bg-600 rounded-lg text-left transition-colors"
             >
               <div className="font-medium text-sm">{item.name} - {item.chord}</div>
-              <div className="text-xs text-gray-400 mt-1">
+              <div className="text-xs text-earth-bg-400 mt-1">
                 Click to add to track
               </div>
             </button>
@@ -107,10 +107,10 @@ export function TheoryHelper() {
     return (
       <div className="space-y-4">
         <div>
-          <h4 className="text-sm font-medium mb-2 text-primary-400">
+          <h4 className="text-sm font-medium mb-2 text-earth-purple-400">
             {keyInfo} Scale
           </h4>
-          <p className="text-xs text-gray-400 mb-4">
+          <p className="text-xs text-earth-bg-400 mb-4">
             Notes in this scale:
           </p>
         </div>
@@ -123,16 +123,16 @@ export function TheoryHelper() {
             return (
               <button
                 key={index}
-                className="p-2 bg-gray-700 hover:bg-gray-600 rounded text-center transition-colors"
+                className="p-2 bg-earth-bg-700 hover:bg-earth-bg-600 rounded text-center transition-colors"
               >
                 <div className="font-medium text-sm">{noteName}</div>
-                <div className="text-xs text-gray-400">{scaleDegree}</div>
+                <div className="text-xs text-earth-bg-400">{scaleDegree}</div>
               </button>
             );
           })}
         </div>
         
-        <div className="mt-4 p-3 bg-gray-700 rounded-lg">
+        <div className="mt-4 p-3 bg-earth-bg-700 rounded-lg">
           <h5 className="text-sm font-medium mb-2">Scale Pattern:</h5>
           <p className="text-xs text-gray-400">
             {currentProject.key.mode === 'major' 
@@ -169,7 +169,7 @@ export function TheoryHelper() {
       <div className="space-y-4">
         {tips.map((tip, index) => (
           <div key={index} className="p-3 bg-gray-700 rounded-lg">
-            <h5 className="text-sm font-medium mb-2 text-primary-400">{tip.title}</h5>
+            <h5 className="text-sm font-medium mb-2 text-earth-purple-400">{tip.title}</h5>
             <p className="text-xs text-gray-300">{tip.content}</p>
           </div>
         ))}
@@ -178,14 +178,14 @@ export function TheoryHelper() {
   };
 
   return (
-    <div className="w-80 bg-gray-800 border-l border-gray-700 flex flex-col">
+    <div className="w-80 bg-earth-bg-800 border-l border-earth-bg-700 flex flex-col">
       {/* Header */}
-      <div className="p-4 border-b border-gray-700">
+      <div className="p-4 border-b border-earth-bg-700">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-medium">Theory Helper</h3>
           <button
             onClick={toggleTheoryHelper}
-            className="text-gray-400 hover:text-gray-200"
+            className="text-earth-bg-400 hover:text-earth-bg-200"
           >
             <X size={20} />
           </button>
@@ -201,8 +201,8 @@ export function TheoryHelper() {
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`flex items-center space-x-1 px-3 py-1.5 rounded text-xs font-medium transition-colors ${
                   activeTab === tab.id
-                    ? 'bg-primary-600 text-white'
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                    ? 'bg-earth-purple-600 text-white'
+                    : 'bg-earth-bg-700 text-earth-bg-300 hover:bg-earth-bg-600'
                 }`}
               >
                 <Icon size={12} />

@@ -78,7 +78,7 @@ export function AIInstrumentDesigner() {
         <h3 className="text-white font-medium mb-3 flex items-center gap-2">
           🎹 Create Instrument
           {aiGenerating && (
-            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+            <div className="w-2 h-2 bg-earth-green-500 rounded-full animate-pulse"></div>
           )}
         </h3>
 
@@ -89,7 +89,7 @@ export function AIInstrumentDesigner() {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Describe the sound you want to create..."
-            className="w-full bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-blue-500 focus:outline-none text-sm h-20 resize-none"
+            className="w-full bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-earth-purple-500 focus:outline-none text-sm h-20 resize-none"
             disabled={aiGenerating}
           />
         </div>
@@ -118,7 +118,7 @@ export function AIInstrumentDesigner() {
             <div className="flex gap-2">
               <button
                 onClick={() => setShowAdvanced(!showAdvanced)}
-                className="text-xs text-blue-400 hover:text-blue-300"
+                className="text-xs text-earth-ochre-400 hover:text-earth-ochre-300"
               >
                 {showAdvanced ? 'Simple' : 'Advanced'}
               </button>
@@ -162,8 +162,8 @@ export function AIInstrumentDesigner() {
         </div>
 
         {/* Characteristic Summary */}
-        <div className="bg-blue-900 bg-opacity-30 p-3 rounded-lg mb-4">
-          <div className="text-sm text-blue-200 mb-1">Generated Sound Profile:</div>
+        <div className="bg-earth-purple-900 bg-opacity-30 p-3 rounded-lg mb-4">
+          <div className="text-sm text-earth-purple-200 mb-1">Generated Sound Profile:</div>
           <div className="text-xs text-gray-300">
             A {getCharacteristicDescription('complexity', characteristics.complexity).toLowerCase()}, {' '}
             {getCharacteristicDescription('brightness', characteristics.brightness).toLowerCase()} sound with {' '}
@@ -178,7 +178,7 @@ export function AIInstrumentDesigner() {
           <button
             onClick={handleCreateInstrument}
             disabled={aiGenerating || !prompt.trim()}
-            className="flex-1 bg-blue-600 hover:bg-blue-500 disabled:bg-gray-600 text-white py-3 rounded transition-colors font-medium"
+            className="flex-1 bg-earth-purple-600 hover:bg-earth-purple-500 disabled:bg-gray-600 text-white py-3 rounded transition-colors font-medium"
           >
             {aiGenerating ? (
               <span className="flex items-center justify-center gap-2">

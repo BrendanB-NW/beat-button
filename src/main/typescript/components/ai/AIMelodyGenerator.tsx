@@ -73,7 +73,7 @@ export function AIMelodyGenerator() {
         <h3 className="text-white font-medium mb-3 flex items-center gap-2">
           🎵 Generate Melody
           {aiGenerating && (
-            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+            <div className="w-2 h-2 bg-earth-green-500 rounded-full animate-pulse"></div>
           )}
         </h3>
 
@@ -94,7 +94,7 @@ export function AIMelodyGenerator() {
             <select
               value={selectedTrackId}
               onChange={(e) => setSelectedTrackId(e.target.value)}
-              className="flex-1 bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-blue-500 focus:outline-none text-sm"
+              className="flex-1 bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-earth-purple-500 focus:outline-none text-sm"
             >
               <option value="">Select a track...</option>
               {currentProject.tracks.map(track => (
@@ -120,7 +120,7 @@ export function AIMelodyGenerator() {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Describe the melody you want to generate..."
-            className="w-full bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-blue-500 focus:outline-none text-sm h-20 resize-none"
+            className="w-full bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-earth-purple-500 focus:outline-none text-sm h-20 resize-none"
             disabled={aiGenerating}
           />
         </div>
@@ -175,7 +175,7 @@ export function AIMelodyGenerator() {
               <select
                 value={rhythmicDensity}
                 onChange={(e) => setRhythmicDensity(e.target.value as any)}
-                className="w-full bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-blue-500 focus:outline-none text-sm"
+                className="w-full bg-gray-800 text-white px-3 py-2 rounded border border-gray-600 focus:border-earth-purple-500 focus:outline-none text-sm"
               >
                 <option value="sparse">Sparse (few notes)</option>
                 <option value="moderate">Moderate</option>
@@ -220,7 +220,7 @@ export function AIMelodyGenerator() {
         <button
           onClick={handleGenerateMelody}
           disabled={aiGenerating || !prompt.trim() || !selectedTrackId}
-          className="w-full bg-blue-600 hover:bg-blue-500 disabled:bg-gray-600 text-white py-3 rounded transition-colors font-medium"
+          className="w-full bg-earth-purple-600 hover:bg-earth-purple-500 disabled:bg-gray-600 text-white py-3 rounded transition-colors font-medium"
         >
           {aiGenerating ? (
             <span className="flex items-center justify-center gap-2">
